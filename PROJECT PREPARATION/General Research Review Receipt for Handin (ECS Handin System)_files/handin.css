@@ -1,0 +1,168 @@
+@media print { .noprint { display: none; } }
+
+.handin_title {
+	padding: 4px;
+	border: solid 1px #808;
+}
+.handin_title h1 {
+	font-size: 100%;
+	margin: 0px;
+}
+h2 {
+	margin: 0px;
+}
+.handin_userbar {
+	padding: 2px;
+	font-size: 90%;
+	text-align: right;
+}
+.handin_breadcrumbs {
+	padding: 2px;
+	font-size: 90%;
+}
+.handin_content {
+	padding: 1em;
+	margin-bottom: 8px;
+}
+.handin_sectiontitle {
+	background-color: #800;
+	color: #fff;
+	border: solid 1px #800;
+	padding: 4px 1em 4px 1em;
+}
+.handin_box {
+	border: solid 1px #888;
+	padding: 4px;
+	background-color: #eee;
+}
+.handin_datatable th {
+	text-align: right;
+	vertical-align: top;
+}
+.handin_datagrid {
+	border-collapse: collapse;
+}
+.handin_datagrid th {
+	vertical-align: top;
+	font-weight: bold;
+	border: solid 1px #000;
+	background-color: #99f;
+}
+.handin_datagrid td {
+	text-align: left;
+	vertical-align: top;
+	padding: 3px;
+	border: solid 1px #000;
+	background-color: #eef;
+}
+
+.handin_warning {
+	border: solid 2px red;
+	background-color: yellow;
+	color: #000;
+	padding: 0.5em;
+	margin: 0.5em 0 0.5em;
+}
+.handin_message {
+	border: solid 2px green;
+	background-color: #cfc;
+	color: #000;
+	padding: 0.5em;
+	margin: 0.5em 0 0.5em;
+}
+.handin_req {
+	color: red;
+	font-size: 90%;
+	padding-right: 1em;
+	font-style: italic;
+}
+.handin_help {
+	font-size: 90%;
+}
+form {
+	margin: 0px;
+}
+table.handin_log {
+	border-collapse: collapse;
+}
+table.handin_log th {
+	border: solid 1px #999;
+	background-color: #ccf;
+}
+table.handin_log td {
+	padding: 3px;
+	border: solid 1px #999;
+	background-color: #eef;
+}
+dl dt {
+	font-weight: bold;
+	font-size: 120%;
+}
+dl dd {
+	margin-bottom: 8px;
+}
+
+
+
+th.header {
+    cursor: pointer;
+    font-weight: bold;
+    background-image: url(/images/table/sort_arrows.gif);
+    background-repeat: no-repeat;
+    background-position: center left;
+    padding-left: 20px;
+    padding-right: 10px;
+    background-color: #99c !important;
+}
+th.headerSortUp {
+    background-image: url(/images/table/sort_asc_arrow.gif);
+}
+th.headerSortDown {
+    background-image: url(/images/table/sort_desc_arrow.gif);
+}
+tr.odd td {
+	background-color: #ddf;
+}
+table.sortable_table {
+    border-collapse: collapse;
+    font-size: 90%;
+}
+table.sortable_table tr td {
+/*    border: 1px solid #ddd;*/
+}
+table.sortable_table tr th {
+/*    border: 1px solid #ddd;*/
+}
+table.no_cell_wordwrap td {
+	white-space: nowrap;
+}
+
+
+tr.heavy_top_row td { 
+	border-top: solid 2px black;
+}
+
+
+/* SURVEY */
+
+div.survey_section_title {
+	background-color: #68ACA6;
+	color: #ffffff;
+	font-size: 170%;
+	padding: 4px;
+}
+div.survey_section {
+	padding-bottom: 16px;
+}
+div.survey_section td {
+	vertical-align: top;
+	padding: 4px;
+}
+div.survey_question_title {
+	vertical-align: top;
+	font-size: 130%;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+

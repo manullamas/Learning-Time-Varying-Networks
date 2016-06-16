@@ -1,0 +1,40 @@
+
+###########################################################################
+####    Reading and preprocessing Drosophila Gene Expression dataset    ###
+###########################################################################
+
+
+## Loading data
+
+
+setwd("C:/Users/Manuel/Desktop/Southampton/MastersThesis/tesla/data/")
+
+data1 = read.table("GSE4347-GPL2837_series_matrix.txt", skip = 71, nrows= 9217)   # Read the file from line 72 (starting lines are metadata) and skip the last line (statement to end the matrix)
+header1 <- data1[1,]               # Take 1st line of the table as header
+data1 <- data1[2:nrow(data1),]            # Delete header from table
+colnames(data1) <- unlist(header1)            # Add the header
+                          
+data2 = read.table("GSE4347-GPL2838_series_matrix.txt", skip = 71, nrows= 9217)   # Read the file from line 72 (starting lines are metadata) and skip the last line (statement to end the matrix)
+header2 <- data2[1,]               # Take 1st line of the table as header
+data2 <- data2[2:nrow(data2),]            # Delete header from table
+colnames(data2) <- unlist(header2)            # Add the header
+
+data3 = read.table("GSE4347-GPL2839_series_matrix.txt", skip = 71, nrows= 9217)   # Read the file from line 72 (starting lines are metadata) and skip the last line (statement to end the matrix)
+header3 <- data3[1,]               # Take 1st line of the table as header
+data3 <- data3[2:nrow(data3),]            # Delete header from table
+colnames(data3) <- unlist(header3)            # Add the header
+
+data4 = read.table("GSE4347-GPL2840_series_matrix.txt", skip = 71, nrows= 9601)   # Read the file from line 72 (starting lines are metadata) and skip the last line (statement to end the matrix)
+header4 <- data4[1,]               # Take 1st line of the table as header
+data4 <- data4[2:nrow(data4),]            # Delete header from table
+colnames(data4) <- unlist(header4)            # Add the header
+
+rm(header1, header2, header3, header4)
+
+
+######################################################################################################
+######################################################################################################
+
+drosophila <- cbind(data1, data2, data3, data4)
+
+
