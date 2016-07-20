@@ -30,7 +30,7 @@ str = sprintf('%s minimize( ',str);
 for t=1:T
     if(t==1)
         %str = sprintf('%s norm(A%d*x%d-b%Md) + %f*norm(x%d,1) ',str,t,t,t,para.l1,t);
-        str = sprintf('%s (sum (log(1 +exp(A%d * x%d)) - b%d .* (A%d * x%d)))/N%d + %f * norm(x%d .* e ,1)',...
+        str = sprintf('%s (sum (log(1 +exp(A%d * x%d)) - b%d .* (A%d * x%d)))/N%d + %f * norm(x%d .* e ,1)',... %the problem could be in <<x%d .* e>>, they have to have the SAME dimensions (e.g. both of them column vector) ---> use e' 
             str,t,t,t,t,t,t,l1(t),t);
     else
         str = sprintf('%s + (sum(log(1 +exp(A%d * x%d)) - b%d .* (A%d * x%d)))/N%d + %f* norm(x%d .* e ,1)',...
@@ -39,7 +39,7 @@ for t=1:T
 end
 
 %add temporal constraints
-%first add due to initial  network
+%first add condition due to initial  network (iniG)
 if(constBound)
    str = sprintf('%s + %f*norm(x1-iniG,1) ',str,l1_t(1));    
 end
@@ -60,4 +60,4 @@ if(constBound)
 end
 
 str = sprintf('%s ); ',str);
-str = sprintf('%s cvx_end ',str);    
+str = sprintf('%s cvx_end ',str); 

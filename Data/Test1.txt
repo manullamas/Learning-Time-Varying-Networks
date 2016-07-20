@@ -1,0 +1,12 @@
+#############
+##  Test1  ##
+#############
+
+Data: 'n' most important stocks in the S&P500
+
+Start date: 01/01/2005
+End date: 01/01/2012
+
+
+Comments:
+ - FB not taken: in the market since 2012

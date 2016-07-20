@@ -41,14 +41,16 @@
 %result: is a [Px1] cell array where result{p} is an [TxP] real matrix where
 %result{p}(t,i) is the coeff. over the edge that connects node p to node i
 %at epoch t (can be possibly zero). Note: If st and ed are specified, then only
-%result{st:ed} are filled in this run, other entries are read from the
+%rets, datasult{st:ed} are filled in this run, other entries are read from the
 %tmepFile of the most recent run, if any otherwise they will be left empty.
 %
 
 
+
+%cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla')
 function result = tesla(dataFile,sp,sm,tempFile,st,ed,consBound,ontology)
 
-
+% POSIBLEMENTE 'dataFile.mat' NECESITE COMILLAS PARA CARGAR
 load(dataFile);  %this loads data,ts
 [N,P] = size(data);
 
@@ -84,7 +86,7 @@ catch
     result = cell(P,1);
 end
 
-for m=start:ed
+for m=start:ed   %going through the NODES
     fprintf('\n solving for variable %d/%d ...',m,P);
     if(consBound)
             fprintf('\n Getting boundary network');
@@ -107,17 +109,18 @@ for m=start:ed
         sel = find(selMatrix(m,:)==1);
         sel = [sel m];
         try
+            % Define variables to use in the cvx problem (A#, b#, c#, N#)
             for t=1:T
                 I= find(ts==t);
-                str2 = sprintf('A%d = data(I,sel);',t);
+                str2 = sprintf('A%d = data(I,sel);',t);    % Subset A#: samples from 'data' corresponding to epoch # 
                 eval(str2);
-                str2 = sprintf('b%d = data(I,m);',t);
+                str2 = sprintf('b%d = data(I,m);',t);    % Define b#: it is the current state of the node we are on (x#)
                 eval(str2);
-                str2 = sprintf('A%d(:,end)=1;',t);
+                str2 = sprintf('A%d(:,end)=1;',t);    % Turn data corresponding to the node we are to 1 (defined in the algorithm)
                 eval(str2);
-                str2 = sprintf('c%d=ones(length(I),1);',t);
+                str2 = sprintf('c%d=ones(length(I),1);',t);   % vector of 1, length = samples per epoch
                 eval(str2);
-                str2 = sprintf('N%d=%d;',t,length(I));
+                str2 = sprintf('N%d=%d;',t,length(I));    % N# = samples per epoch
                 eval(str2);
             end
         catch
@@ -130,8 +133,8 @@ for m=start:ed
             cvx_precision(.01);
         end
         e= ones(sum(selMatrix(m,:))+1,1);
-        e(end)=0;    %now just run the lass
-        tic; eval(str); toc
+        e(end)=0;    %now just run the lass       ?????????????? it is running everything!
+        tic; eval(str); toc    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %if(cvx_status()~='Solved')
         if( strcmp(cvx_status,'Solved') ~= 1)
             flag = 1;
@@ -161,29 +164,37 @@ for m=start:ed
         end
     end
     consBound = tmConsBound;
-    %store the weights
-    tt = zeros(P,T);
+    %store the weights    tt = zeros(P,T);
     tt_temp = zeros(sum(selMatrix(m,:))+1,T);
+
     for t=1:T
         str2 = sprintf('tt_temp(:,t) = x%d;',t);
         eval(str2);
         tt(sel,t) = tt_temp(:,t);
     end
     tt = tt';
-    result{m} = tt;
+    result{m} = tt;      % Store results: each result{m} is a matrix [TxP] where each row represents the edges from node m (€P) to the rest on the epoch t (€T).
     %display average sparsness
     d22 = getAvgDegAndTrimmedDeg(tt);
     fprintf('\n average Degree for %d= %f ',m,d22);
     %write the matrix
     lastNode = m;
     save(outFile, 'lastNode', 'result');
+
+ %%%%% Check if when storing the matrix the last point in the vectors x#
+ %%%%% still correspond to the node we are on: [1 2 3 5 6 7 8 9 10 4]
 end
 
 
 
     
-
-
+% TODO:
+%   - Check if the program works with e' instead of e    (probably not
+%   since x# can be already defined as column?)
+%   - Check using more points for each network and less stocks (try to avoid an ill-cnditioned problem)
+%   - Explore more in deep the code: x# stores always the last point as
+%   corresponding to the node m? the final matrix just show the interaction
+%   between node m and the rest (but not itself)? (e.g. dim(x#)=(1,P-1)
 
 
 
