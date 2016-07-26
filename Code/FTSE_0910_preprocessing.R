@@ -23,7 +23,9 @@ for (i in 1:length(myList)) {
 ### Create list with dataframes
 list_dfs <- list()
 for (i in seq_along(myList)) {
+  # if (i != 1) {
   list_dfs[[i]] <- read.csv(file = myList[i])[, c('Date', 'Close')]
+  # }
 }
 ### Merge datasets by Date (inner join)
 dfStocks <-  Reduce(function(x,y) merge(x,y, by = 'Date'), list_dfs)
@@ -62,8 +64,6 @@ datesReturns <- data.frame(Dates[2:nrow(Dates),])
 
 
 
-
-
 # ### Normalize?: take only values and normalize by column
 # StocksNormalized <- data.frame(scale(Stocks))    
 # 
@@ -76,6 +76,8 @@ datesReturns <- data.frame(Dates[2:nrow(Dates),])
 
 ################################################################################################
 ################################################################################################
+#####  INDEX MATRIX AND STORAGE ####
+
 
 ### Create index matrix
 FTSE_indexes <- cbind(1:length(FTSE100_list), FTSE100_list)
@@ -98,7 +100,7 @@ write.csv(FTSE_indexes, file = paste0(path2,"FTSE_indexes.csv"),row.names=FALSE)
 
 
 #### TODO:
- #       - postprocessing: prepare data to input in cytoscape (indexed correlation matrix and create an index matrix with Stock names)
+ #       - postprocessing: prepare data to input in cytoscape (indexed correlation matrix)
 
 
 

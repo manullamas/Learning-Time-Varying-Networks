@@ -18,9 +18,6 @@ dataToLoad = csvread('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE
 dataToLoad = dataToLoad(1:252,:);   % from 1jan to 12dec 2009
 
 
-
-
-
 % filename = names of the stocks
 filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\processed\FTSE_names.csv';
 delimiter = '';
@@ -43,6 +40,7 @@ fclose(fileID);
 Dates = dataArray{:, 1};
 clearvars filename delimiter startRow formatSpec fileID dataArray ans;
 
+Dates = Dates(1:252);
 
 %% Create epoch vector
 
@@ -52,8 +50,6 @@ clearvars filename delimiter startRow formatSpec fileID dataArray ans;
  ts=r(:);
 
 clearvars n x r
- 
-
 
 
 %% Create dataFile
@@ -66,8 +62,23 @@ matobj.ts = ts;  % [Nx1] ->  ts(i)= time stamp/epoch associated to i in data
 
 %% Sparsity and Smooth penalties
 
-sp = 0.001;   % {0.001, 0.005, ..., 0.002}
-sm = 0.1;     % {0.1, 0.3, ..., 2}
+sp = 0.002;   % {0.001, 0.005, ..., 0.002}
+sm = 0.01;     % {0.1, 0.3, ..., 2}
+
+% Trials:
+%
+% sp=0.02 too high!!!   (sm=0.002 -> degree1=217, degree12=22)
+% 
+% sp=0.005 (sm=0.01) still to sparse
+% 
+% 
+
+
+
+
+
+
+
 
 
 
@@ -93,10 +104,10 @@ sm = 0.1;     % {0.1, 0.3, ..., 2}
 % 
 
 %% Create tempFile
-
-cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla')
-matobj = matfile('tempFile','Writable',true);
-
-
+% 
+% cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla')
+% matobj = matfile('tempFile','Writable',true);
+% 
+% 
 
 

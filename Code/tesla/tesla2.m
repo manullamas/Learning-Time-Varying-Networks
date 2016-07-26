@@ -99,6 +99,5 @@ for m=start:ed   %going through the NODES
 %     fprintf('\n average Degree for %d= %f ',m,d22);
 end
 
-%%
 
 
