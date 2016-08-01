@@ -126,12 +126,17 @@ E(net)$arrow.size <- .2
 # legend(x=1, y=1, unique(StocksFull$Sector), pch=21,  col="#777777", pt.bg=colrs,
 #        pt.cex=2, cex=.8, bty="n", ncol=1, y.intersp = 0.2)
 library(RColorBrewer)
+pdf(file = 'prueba12.pdf', width = 16, height = 15) # Store picture as .pdf
+deg <- degreeMatrix[,1]  # maybe using degree computed from igraph???
+V(net)$size <- 1.7*log(deg)
 nSectors <- length(unique(Stocks$Sector.type))
 col = list(color = brewer.pal(11, 'Paired'))   #Take 11 colors from sample called 'Paired'
 V(net)$color <- col$color[Stocks$Sector.type]
+#png(file = 'pruebaPNG.png', width = 400, height = 350)
 plot(net, edge.arrow.size=.05, edge.curved=.1, vertex.label=as.character(stockNames[,2]), vertex.label.color = 'black')
-legend(x=1, y=1, unique(StocksFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
-       pt.cex=2, cex=.8, bty="n", ncol=1, y.intersp = 0.2)
+legend(x=0.5, y=-0.5, unique(StocksFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+       pt.cex=3, cex=1.5, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
+dev.off()
 # REMEMBER: issues with color when trimming the dataset (AAL wasnt in the sample), thats why in the legend Im using
 # to identify them StocksFull (if not it gives color given the Sector.type but the 1st tag doesnt correspond to materials)
 
