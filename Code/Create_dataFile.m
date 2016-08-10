@@ -9,14 +9,11 @@
 
 
 %% Load data (preprocesed in R)
-
-% filename = returns / normalize values... (has to be a matrix) 
-dataToLoad = csvread('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\processed\FTSE100_returns.csv', 1, 0);
+ 
+returns = csvread('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\processed\FTSE100_returns.csv', 1, 0);
 %StockNotNorm = csvread('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\StocksNotNorm.csv', 1, 0);
-
-% Preparation of data (number of samples (select rows to fit)
-dataToLoad = dataToLoad(1:252,:);   % from 1jan to 12dec 2009
-
+% Select rows to fit
+%returns = returns(1:252,:);   % from 1jan to 12dec 2009
 
 % filename = names of the stocks
 filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\processed\FTSE_names.csv';
@@ -40,23 +37,51 @@ fclose(fileID);
 Dates = dataArray{:, 1};
 clearvars filename delimiter startRow formatSpec fileID dataArray ans;
 
-Dates = Dates(1:252);
+%Dates = Dates(1:252);
 
 %% Create epoch vector
+   Nepochs = 24;
+ n = floor(length(Dates)/Nepochs);    % Number of samples on each epoch 
+ x = (1:Nepochs)';     % Epochs
+ r = repmat(x,1,n)';
+ ts = r(:);
+ nStocks = size(returns,2);
+ returns = returns(1:length(ts),:);
+ 
+% Gain/Loss matrix
+GainLoss = zeros(nStocks, length(x));
+for i = 1:nStocks
+    for t = 1:length(x)
+        GainLoss(i,t) = returns(t*n,i)-returns((t-1)*n+1,i);        
+    end
+end
+cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\networks');
+csvwrite('GainLoss.csv', GainLoss)
+clearvars i t
 
- n=21;    % Number of samples on each epoch 
- x=(1:12)';     % Epochs
- r=repmat(x,1,n)';
- ts=r(:);
-
+% Distance Matrix (between stocks (Euclidean)
+for t = 1:length(x)
+    distMatrix = zeros(nStocks, nStocks);
+    for i = 1:nStocks
+        for j = 1:nStocks
+            distMatrix(i,j) = norm(returns(((t-1)*n+1):(t*n),i)-returns(((t-1)*n+1):(t*n),j));
+        end
+    end
+    if t < 10
+       str = sprintf('csvwrite(''distMatrix_0%d.csv'', distMatrix)', t);
+       eval(str);
+    else
+       str = sprintf('csvwrite(''distMatrix_%d.csv'', distMatrix)', t);
+       eval(str);
+    end
+end
 clearvars n x r
-
 
 %% Create dataFile
 
 cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla')
 matobj = matfile('dataFile','Writable',true);
-matobj.data = dataToLoad;   %[NxP] ->  N: n samples (time steps);  P: n Nodes/stocks
+matobj.data = returns;   %[NxP] ->  N: n samples (time steps);  P: n Nodes/stocks
 matobj.ts = ts;  % [Nx1] ->  ts(i)= time stamp/epoch associated to i in data
 
 
@@ -71,7 +96,7 @@ sm = 0.01;     % {0.1, 0.3, ..., 2}
 % 
 % sp=0.005 (sm=0.01) still to sparse
 % 
-% 
+%%
 
 
 
@@ -84,8 +109,8 @@ sm = 0.01;     % {0.1, 0.3, ..., 2}
 
 % %% Plotting the normalized stock prices (checking if there are some general patterns)
 % 
-% for i = 1:length(dataToLoad(1,:))
-%     plot(Dates, dataToLoad(:,i))
+% for i = 1:length(returns(1,:))
+%     plot(Dates, returns(:,i))
 %     hold on
 % end
 % 
@@ -94,7 +119,7 @@ sm = 0.01;     % {0.1, 0.3, ..., 2}
 % 
 % %TEST
 % %  37 - 60 (2008,2009)
-% test = dataToLoad(37:60,:);
+% test = returns(37:60,:);
 % %plot(Dates(37:60), test)
 % ts_test = [1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4]';
 % 

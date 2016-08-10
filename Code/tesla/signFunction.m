@@ -2,20 +2,17 @@
 %%%%%%% PROCESS AND ANALISE OUTPUT %%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%just change 'tesla output' (and maybe folder)
-
-
 %function [] = 
 
 cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla');
-
 %%%%%% Change input dataFile, tesla output and boundary of the weights
+
 load('dataFile.mat');    % choose dataFile (same as tesla input)
 T= max(ts);
 [N,P] = size(data);
+load('teslaResults24.mat'); %result = results; clearvars results;
 result_sign = cell(P,1);
-result = results;        % tesla output
-degreeMatrix = zeros(P,T);T
+degreeMatrix = zeros(P,T);
 % Store networks belonging to each epoch in matrices
 for t = 1:T   % epochh we are on
     str1 = sprintf('matrix_%d = zeros(P,P);', t);
@@ -25,13 +22,12 @@ for t = 1:T   % epochh we are on
         eval(str2);
     end
     
-    
 % Convert to real 0 tiny values
     str3 = sprintf('m = matrix_%d',t);
     eval(str3);
     for r = 1:P
         for c = 1:P
-            if abs(m(r,c)) < 0.001     %%% change reject boundary
+            if abs(m(r,c)) < 0.01     %%% change reject boundary
                 m(r,c) = 0;
             end
 % Just plotting when both ways interactions
@@ -60,7 +56,7 @@ for t = 1:T   % epochh we are on
     eval(str7);
 end
 
-
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% EXPLORATORY ANALYSIS %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -68,7 +64,6 @@ end
 
 % compute avg degree over all time stamps
 avgDegree = mean(degreeMatrix, 2);
-
 
 % load stocks names as table
 filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\networks\FTSE_indexes.csv';
@@ -86,9 +81,7 @@ fclose(fileID);
 FTSElist = [dataArray{1:end-1}];
 clearvars filename delimiter startRow formatSpec fileID dataArray ans;
 
-
 % plot avgDegree per asset
-
 figure()
 plot(1:length(avgDegree), avgDegree,'*')
 hold on
@@ -103,10 +96,9 @@ end
 line([0 length(avgDegree)+5], [25 25])
 %%%%%%%% name it with sp and sm values!!!
 
-
 % Exploring how connections of hubs change over epochs
 for j = 1:length(degreeMatrix)
-    if avgDegree(j) >= 25
+    if avgDegree(j) >= 3
         figure()
         plot(1:T, degreeMatrix(j,:), '*-')
         title(FTSElist(j))
@@ -114,7 +106,6 @@ for j = 1:length(degreeMatrix)
     end
 end
     
-
 % General info from 1st and last networks 
 matrix_1;
 matrix_12;
@@ -129,9 +120,9 @@ disp(['Max_weight net12:   ',  num2str(max(max(matrix_12)))])
 disp(' ')
 disp(['min_weight net12:   ',  num2str(min(min(matrix_12)))])
 disp(' ')
-disp(['N edges 1:   ',  num2str(sum(sum(matrix_sign_1)))])
+disp(['N edges 1:   ',  num2str(sum(sum(abs(matrix_sign_1))))])
 disp(' ')
-disp(['N edges 12:   ',  num2str(sum(sum(matrix_sign_12)))])
+disp(['N edges 12:   ',  num2str(sum(sum(abs(matrix_sign_12))))])
 disp(' ')
 disp(['% of variation:   ', num2str((sum(sum(matrix_sign_1))-sum(sum(matrix_sign_12)))*100/sum(sum(matrix_sign_1))), '%'])
 disp(' ')
@@ -145,7 +136,6 @@ disp('                                   N edges arpund 1000???')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 close all;
-
 
 cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\networks');
 
@@ -161,17 +151,17 @@ for t = 1:T
 %     str11 = sprintf('matrix_%d = [tags, matrix_%d];', t, t);
 %     eval(str11);
 
-%     if t < 10     % Store as 01, 02, 03...
-%         str12 = sprintf('csvwrite(''FTSE100_0%d_signs.csv'', matrix_sign_%d)', t, t);
-%         eval(str12);
-%         str13 = sprintf('csvwrite(''FTSE100_0%d_weights.csv'', matrix_%d)', t, t);
-%         eval(str13);
-%     else        
+    if t < 10     % Store as 01, 02, 03...
+        str12 = sprintf('csvwrite(''FTSE100_0%d_signs.csv'', matrix_sign_%d)', t, t);
+        eval(str12);
+        str13 = sprintf('csvwrite(''FTSE100_0%d_weights.csv'', matrix_%d)', t, t);
+        eval(str13);
+    else        
         str12 = sprintf('csvwrite(''FTSE100_%d_signs.csv'', matrix_sign_%d)', t, t);
         eval(str12);
         str13 = sprintf('csvwrite(''FTSE100_%d_weights.csv'', matrix_%d)', t, t);
         eval(str13);
-%     end
+    end
        
     % Clear processed matrices
     %str14 = sprintf('clearvars matrix_sign_%d, matrix_%d', t, t);
@@ -182,11 +172,6 @@ end
 % ANALYSIS VARIABLES
 csvwrite('degreeMatrix.csv', degreeMatrix)
 csvwrite('avgDegree.csv', avgDegree)
-
-
-
-
-
 
 
 cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla');

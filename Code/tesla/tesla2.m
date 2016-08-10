@@ -14,7 +14,7 @@ end
    consBound=0;
 
 if(nargin<4)
-    st=1;
+    st = 1;
     ed = P;
 end
     start = st;
@@ -39,7 +39,7 @@ for m=start:ed   %going through the NODES
                 eval(str2);
                 str2 = sprintf('b%d = data(I,m);',t);    % Define b#: it is the current state of the node we are on (x#)
                 eval(str2);
-                str2 = sprintf('A%d(:,end)=1;',t);    % Turn data corresponding to the node we are to 1 (defined in the algorithm)
+                str2 = sprintf('A%d(:,end)=0;',t);    % Turn data corresponding to the node we are to 1 (defined in the algorithm)
                 eval(str2);
                 str2 = sprintf('c%d=ones(length(I),1);',t);   % vector of 1, length = samples per epoch
                 eval(str2);
@@ -91,7 +91,7 @@ for m=start:ed   %going through the NODES
     for t=1:T
         str2 = sprintf('tt_temp(:,t) = x%d;',t);
         eval(str2);
-        tt(sel,t) = tt_temp(:,t);
+        tt(sel,t) = tt_temp(:,t);  %ultimo valor de tt_temp corresponde al propio nodo m (problematico) -> x(t) devuelto por getCVXExp
     end
     tt = tt';
     result{m} = tt;      % Store results: each result{m} is a matrix [TxP] where each row represents the edges from node m (€P) to the rest on the epoch t (€T).
@@ -99,5 +99,7 @@ for m=start:ed   %going through the NODES
 %     fprintf('\n average Degree for %d= %f ',m,d22);
 end
 
-
+cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla')
+matobj = matfile('teslaResults','Writable',true);
+matobj.result = result; 
 
