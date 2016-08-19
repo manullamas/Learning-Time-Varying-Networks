@@ -10,7 +10,7 @@ cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla');
 load('dataFile.mat');    % choose dataFile (same as tesla input)
 T= max(ts);
 [N,P] = size(data);
-load('teslaResults24.mat'); %result = results; clearvars results;
+load('teslaResults_sp0.001_sm0.005.mat'); %result = results; clearvars results;
 result_sign = cell(P,1);
 degreeMatrix = zeros(P,T);
 % Store networks belonging to each epoch in matrices
@@ -66,7 +66,7 @@ end
 avgDegree = mean(degreeMatrix, 2);
 
 % load stocks names as table
-filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\networks\FTSE_indexes.csv';
+filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\FTSE_indexes.csv';
 delimiter = ',';
 startRow = 2;
 formatSpec = '%*q%q%[^\n\r]';

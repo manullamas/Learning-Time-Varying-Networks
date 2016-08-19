@@ -59,23 +59,36 @@ cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\networks');
 csvwrite('GainLoss.csv', GainLoss)
 clearvars i t
 
-% Distance Matrix (between stocks (Euclidean)
+% Compute Distance (Euclidean), Covariance and Correlation Matrices
 for t = 1:length(x)
     distMatrix = zeros(nStocks, nStocks);
+    covMatrix = zeros(nStocks, nStocks);
+    corrMatrix = zeros(nStocks, nStocks);
     for i = 1:nStocks
         for j = 1:nStocks
             distMatrix(i,j) = norm(returns(((t-1)*n+1):(t*n),i)-returns(((t-1)*n+1):(t*n),j));
         end
     end
+    covMatrix = cov(returns(((t-1)*n+1):(t*n),:));
+    corrMatrix = corrcov(covMatrix);
+    
     if t < 10
        str = sprintf('csvwrite(''distMatrix_0%d.csv'', distMatrix)', t);
        eval(str);
+       str1 = sprintf('csvwrite(''covarMatrix_0%d.csv'', covMatrix)', t);
+       eval(str1);
+       str2 = sprintf('csvwrite(''corrMatrix_0%d.csv'', corrMatrix)', t);
+       eval(str2);
     else
        str = sprintf('csvwrite(''distMatrix_%d.csv'', distMatrix)', t);
        eval(str);
+       str1 = sprintf('csvwrite(''covarMatrix_%d.csv'', covMatrix)', t);
+       eval(str1);
+       str2 = sprintf('csvwrite(''corrMatrix_%d.csv'', corrMatrix)', t);
+       eval(str2);
     end
 end
-clearvars n x r
+clearvars n x r i j t
 
 %% Create dataFile
 
@@ -87,8 +100,8 @@ matobj.ts = ts;  % [Nx1] ->  ts(i)= time stamp/epoch associated to i in data
 
 %% Sparsity and Smooth penalties
 
-sp = 0.002;   % {0.001, 0.005, ..., 0.002}
-sm = 0.01;     % {0.1, 0.3, ..., 2}
+sp = 0.001;   % {0.001, 0.005, ..., 0.002}
+sm = 0.005;     % {0.1, 0.3, ..., 2}
 
 % Trials:
 %

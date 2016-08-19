@@ -78,11 +78,13 @@ FTSE_indexes <- cbind(1:length(FTSE100_list), FTSE100_list)
 ### Save dataframes
 path1 <- 'C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE_0910/processed/'
 path2 <- 'C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE_0910/networks/'
+path3 <- 'C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE_0910/'
 write.csv(returns, file = paste0(path1,"FTSE100_returns.csv"),row.names=FALSE)
 write.csv(logReturns, file = paste0(path1,"FTSE100_logReturns.csv"),row.names=FALSE)
 write.csv(datesReturns, file = paste0(path1,"DatesReturns.csv"),row.names=FALSE)
 write.csv(FTSE100_list, file = paste0(path1,"FTSE_names.csv"),row.names=FALSE)
 write.csv(FTSE_indexes, file = paste0(path2,"FTSE_indexes.csv"),row.names=FALSE)
+write.csv(FTSE_indexes, file = paste0(path3,"FTSE_indexes.csv"),row.names=FALSE)
 
 
 # write.csv(Stocks, file = paste0(path1,"StocksNotNorm.csv"),row.names=FALSE)
