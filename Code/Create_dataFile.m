@@ -57,7 +57,8 @@ returns = csvread('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE\pr
 GainLoss = zeros(nStocks, length(x));
 for i = 1:nStocks
     for t = 1:length(x)
-        GainLoss(i,t) = returns(t*n,i)-returns((t-1)*n+1,i);        
+%         GainLoss(i,t) = returns(t*n,i)-returns((t-1)*n+1,i);       
+          GainLoss(i,t) = mean(returns(((t-1)*n+1):t*n,i));
     end
 end
 cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE\networks');

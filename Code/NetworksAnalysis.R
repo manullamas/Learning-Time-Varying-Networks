@@ -1,15 +1,8 @@
             
-
-
-#problem with distance matrix
+rm(list=ls())
 op <- par()
 
 
-  rm(list=ls())
-  on.exit(par(op))
-  # distribution of plots in a grid
-  par(mfrow=c(2,2), mar=c(0,0,0,0)) # plot four figures - 2 rows, 2 columns
-  par(mfrow=c(1,1))
 
   
                 #######################################
@@ -23,11 +16,11 @@ op <- par()
   folderPath <- 'C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE/'
 
   ret <- read.csv(paste0(folderPath,'/processed/FTSE_returns.csv'))
-     samples=21
-                    #   SectorsFull <- read.csv(paste0(folderPath,'FTSE_Stocks.csv'))
-                    #   Sectors <- SectorsFull[2:nrow(SectorsFull),]  # remove AAL, not in sample
-                        Sectors <- read.csv.....
-                        
+     obserPerEpoch=20
+                    #   Sectors <- read.csv(paste0(folderPath,'FTSE_Stocks.csv'))
+                    #   Sectors <- Sectors[2:nrow(Sectors),]  # remove AAL, not in sample
+      Sectors <- read.csv(paste0(folderPath,'FTSE_Stocks.csv'))
+    
   stockNames <- read.csv(paste0(folderPath,'FTSE_indexes.csv'))
   avgDegree <- read.csv('avgDegree.csv', header = F)
   degreeMatrix <- read.csv( 'degreeMatrix.csv', header = F)
@@ -49,7 +42,7 @@ op <- par()
 #   covMatrices <- list()
     returns <-list()
   for (t in seq_along(listWeights)) {
-        returns[[t]] <- ret[((t-1)*samples+1):(t*samples),] 
+        returns[[t]] <- ret[((t-1)*obserPerEpoch+1):(t*obserPerEpoch),] 
         weightedMatrices[[t]] <- read.csv(file = listWeights[t], header = F)
         signedMatrices[[t]] <- read.csv(file = listSigned[t], header = F)
         # distMatrices[[t]] <- read.csv(file = listDistances[t], header = F)
@@ -250,7 +243,6 @@ op <- par()
     
     ### Layouts
         TESLA.fr[[t]] <- layout_with_fr(netSparse[[t]])#, weights = Weights[[t]])
-        TESLA.fr2[[t]] <- layout_with_fr(netSparse[[t]], niter=500, repulserad=85^3)#, weights = Weights[[t]])
         Reingold[[t]] <- layout.reingold.tilford(netSparse[[t]], circular=T)
         TESLA.fr.grid[[t]] <- layout_with_fr(netSparse[[t]], grid='grid')
         TESLA.kk.abs[[t]] <- layout_with_kk(netSparse[[t]], weights = absWeights[[t]])
@@ -258,10 +250,10 @@ op <- par()
         TESLA.MDS[[t]] <- layout_with_mds(netSparse[[t]])
         # TESLA.MDSdist[[t]] <- layout_with_mds(netSparse[[t]], dist = as.matrix(distMatrices[[t]]))
         TESLA.MDScorr[[t]] <- layout_with_mds(netSparse[[t]], dist = as.matrix(corrMatrices[[t]]))
-        TESLA.lgl[[t]] <- layout_with_lgl(netSparse[[t]])
-        TESLA.lgl2[[t]] <- layout_with_lgl(netSparse[[t]], maxiter=150, maxdelta=nStocks, area=nStocks^2, repulserad=nStocks^4)
-        TESLA.drl[[t]] <- layout_with_drl(netSparse[[t]])
-        fr_grid[[t]] <- 
+#         TESLA.lgl[[t]] <- layout_with_lgl(netSparse[[t]])
+#         TESLA.lgl2[[t]] <- layout_with_lgl(netSparse[[t]], maxiter=150, maxdelta=nStocks, area=nStocks^2, repulserad=nStocks^4)
+#         TESLA.drl[[t]] <- layout_with_drl(netSparse[[t]])
+#         fr_grid[[t]] <- 
 #         CORR.fr[[t]] <- layout_with_fr(netCorrSparse[[t]])#, weights = Weights[[t]])
 #         CORR.fr.abs[[t]] <- layout_with_fr(netCorrSparse[[t]], weights = absWeights.C[[t]])
 #         CORR.kk.abs[[t]] <- layout_with_kk(netCorrSparse[[t]], weights = absWeights.C[[t]])
@@ -280,25 +272,25 @@ op <- par()
   ##    PLOT NETWORKS
   
   # TESLA NETWORKS
-  
-  pdf("ReingoldFrutcherman.pdf")
+ 
+  pdf("ReingoldTilf.pdf")
   for (t in seq_along(netSparse)) {
     plot.igraph(netSparse[[t]], layout = Reingold[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
                 vertex.label=as.character(stockNames[,2]), vertex.label.color='black',
                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-                main = 'Reingold - Frutcherman', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
-    legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+                main = 'Reingold - Frutcherman', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
+    legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
   }
-  dev.off()
+  dev.off() 
   
   pdf("lgl.pdf")
   for (t in seq_along(netSparse)) {
     plot.igraph(netSparse[[t]], layout = TESLA.lgl2[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
                 vertex.label=as.character(stockNames[,2]), vertex.label.color='black',
                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-                main = 'lgl', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
-    legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+                main = 'lgl', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
+    legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
   }
   dev.off()
@@ -308,8 +300,8 @@ op <- par()
     plot.igraph(netSparse[[t]], layout = TESLA.kk.abs[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-                main = 'TESLA   -   kk layout', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
-    legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+                main = 'TESLA   -   kk layout', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
+    legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
   }
   dev.off()
@@ -319,30 +311,30 @@ op <- par()
     plot.igraph(netSparse[[t]], layout = TESLA.fr[[5]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-                main = 'TESLA   -   fr layout', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
-    legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+                main = 'TESLA   -   fr layout', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
+    legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
   }
   dev.off()
   
-  pdf("TESLA_fr_absWeights.pdf")
-  for (t in seq_along(netSparse)) {
-    plot.igraph(netSparse[[t]], layout = TESLA.fr.abs[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
-                vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
-                edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-                main = 'TESLA   -   fr_abs', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
-    legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
-           pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
-  }
-  dev.off()
+#   pdf("TESLA_fr_absWeights.pdf")
+#   for (t in seq_along(netSparse)) {
+#     plot.igraph(netSparse[[t]], layout = TESLA.fr.abs[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
+#                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
+#                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
+#                 main = 'TESLA   -   fr_abs', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
+#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
+#   }
+#   dev.off()
   
   pdf("TESLA_MDS.pdf")
   for (t in seq_along(netSparse)) {
     plot.igraph(netSparse[[t]], layout = TESLA.MDS[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-                main = 'TESLA   -   MDS', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
-    legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+                main = 'TESLA   -   MDS', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
+    legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
   }
   dev.off()
@@ -352,8 +344,8 @@ op <- par()
 #     plot.igraph(netSparse[[t]], layout = TESLA.MDSdist[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-#                 main = 'TESLA   -   MDS (distance matrix)', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#                 main = 'TESLA   -   MDS (distance matrix)', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
+#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -363,8 +355,8 @@ op <- par()
     plot.igraph(netSparse[[t]], layout = TESLA.MDScorr[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-                main = 'TESLA   -   MDS (correlation matrix)', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
-    legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+                main = 'TESLA   -   MDS (correlation matrix)', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
+    legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
   }
   dev.off()
@@ -375,8 +367,8 @@ op <- par()
     plot.igraph(netSparse[[t]], layout = rnd, edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1],
                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-                main = 'TESLA   -   Random', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
-    legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+                main = 'TESLA   -   Random', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
+    legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
   }
   dev.off()
@@ -389,12 +381,12 @@ op <- par()
 #------------------------------------------------------------------------------------------------------   
 #       FLOW STUDY
   
-  pdf("GainLoss3.pdf")
+  pdf("GainLoss.pdf")
   for (t in seq_along(netSparse)) {
-    plot.igraph(netSparse[[t]], layout = rnd, edge.color = E(netSparse[[t]])$col.contagion2, edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
-                vertex.label=as.character(stockNames[,2]), #vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1],
-                edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0, vertex.color=V(netSparse[[t]])$col.contagion2,
-                main = 'Gain/Loss Net', sub = paste0('t = ', t),vertex.size = deg.out[[t]]+deg.in[[t]]/10)#, vertex.size=GainLossMatrix[,t])
+    plot.igraph(netSparse[[t]], layout = rnd, edge.color = E(netSparse[[t]])$col.contagion, edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
+                vertex.label=as.character(stockNames[,2]), vertex.label.color = 'black',  #'yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1],
+                edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0, vertex.color=V(netSparse[[t]])$col.contagion,
+                main = 'Gain/Loss Net', sub = paste0('t = ', t),vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)   #log((Sectors$MC)/1e6))  , vertex.size=GainLossMatrix[,t])
     legend("topright", col=col.GL(2), pch=19, legend=c(round(c(-max(abs(GainLossMatrix[,t])), max(abs(GainLossMatrix[,t]))), 2)))
   }
   dev.off()
@@ -407,7 +399,7 @@ op <- par()
     plot.igraph(netSparse[[t]], layout = rnd, edge.color = E(netSparse[[t]])$col.contagion.homog, edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
                 vertex.label=as.character(stockNames[,2]), #vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1],
                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0, vertex.color=V(netSparse[[t]])$col.contagion.homog,
-                main = 'Gain/Loss Net (normalized)', sub = paste0('t = ', t), vertex.size = deg.out[[t]]+deg.in[[t]]/10)
+                main = 'Gain/Loss Net (normalized)', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
     legend("topright", col=col.GL(2), pch=19,
            legend=c(round(c(-max(abs(GainLossMatrix)), max(abs(GainLossMatrix))), 2)))
   }
@@ -415,6 +407,8 @@ op <- par()
   
   
   ### Contagion GIF
+  library('animation') 
+  library('igraph')
   L <- layout_randomly(netSparse[[1]])
   ani.options(interval=1)
   saveGIF({
@@ -458,7 +452,7 @@ op <- par()
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   kk layout', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -469,7 +463,7 @@ op <- par()
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   fr layout', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -480,7 +474,7 @@ op <- par()
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   fr_abs', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -491,7 +485,7 @@ op <- par()
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   MDS', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -502,7 +496,7 @@ op <- par()
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   MDS (distance matrix)', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -514,7 +508,7 @@ op <- par()
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1],
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   Random', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -595,8 +589,8 @@ op <- par()
       plot.igraph(netSparse[[t]], layout = rnd, edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
                   vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1],
                   edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
-                  vertex.size = deg.out[[t]]+deg.in[[t]]/10, sub = paste0('t = ', t))
-      legend(x=0.5, y=-0.8, unique(SectorsFull$Sector), pch=21,  col="#777777", pt.bg=col$color,
+                  vertex.size = deg.out[[t]]/5+deg.in[[t]]/18, sub = paste0('t = ', t))
+      legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
              pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
       }
     },
@@ -636,8 +630,7 @@ op <- par()
   # plot(1:length(maxValues), unlist(maxValues), xlab='epoch', ylab='weight', main='Max Weights')
   # plot(1:length(minValues), unlist(minValues), xlab='epoch', ylab='weight', main='Min Weights')
   # plot(1:length(means), unlist(means), xlab='epoch', ylab='weight', main='mean weights')
-  hist(E(netWeights)$weight,20)
-  hist(E(netSparse)$weight,20)
+
   
   
   
@@ -684,7 +677,7 @@ op <- par()
 #       theme_bw() + labs(x = '', y = 'Weights Out') + ggtitle('Weights by Sectors')
 #       + theme(legend.position="none", axis.text.y = element_text(face=NULL, size=6, angle=0))
 #     
-  }
+  
 
   
 #------------------------------------------------------------------------------------------    
@@ -748,11 +741,11 @@ op <- par()
                         theme(legend.position="none")
     wSin <-   ggplot(info.sectors[[t]], aes(x = sector, y = weight.in, fill = sector)) + geom_bar(stat = 'identity') +
                         theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                        theme_bw() + labs(x = '', y = 'Weights In') + ggtitle('Weights by Sectors') +
+                        theme_bw() + labs(x = '', y = 'Weights In') + ggtitle('') +
                         theme(legend.position="none")
     wSout <-  ggplot(info.sectors[[t]], aes(x = sector, y = weight.out, fill = sector)) + geom_bar(stat = 'identity') +
                         theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                        theme_bw() + labs(x = '', y = 'Weights Out') + ggtitle('Weights by Sectors') +
+                        theme_bw() + labs(x = '', y = 'Weights Out') + ggtitle('') +
                         theme(legend.position="none")
                         
     multiplot(h1, h2) # , layout = as.matrix(c(1,2,3,3), nrow=2, byrow=TRUE))
@@ -761,6 +754,9 @@ op <- par()
     
   }
   dev.off()
+  
+  
+
 #------------------------------------------------------------------------------------------    
   
   
@@ -772,8 +768,8 @@ op <- par()
   #--------------------------------#
   
   
-  
-### Plot: avg degree of the sectors and network over time
+    pdf('AnalysisOverTime.pdf')
+### Plot: avg Degree Out of the sectors and network over time
     sumDeg.out <- sapply(info.stocks, function(x) sum(x$deg.out))
     meanDeg.out <- sapply(info.stocks, function(x) mean(x$deg.out))
     sdsDeg.out <- sapply(info.stocks, function(x) sd(x$deg.out))
@@ -783,20 +779,23 @@ op <- par()
     dfDeg <- data.frame(cbind(1:T, sumDeg.out, meanDeg.out, sdsDeg.out, meanWeight.out, sdsWeight.out))
     names(dfDeg) <- c('epoch', 'sumDeg.out', 'meanDeg.out', 'sdsDeg.out', 'meanWeight.out', 'sdsWeight.out')
         pl1 <- ggplot(data=dfDeg, aes(x=epoch, y=meanDeg.out), colour='black') + geom_errorbar(aes(ymin=meanDeg.out-sdsDeg.out, ymax=meanDeg.out+sdsDeg.out), width=0.25) +
-               geom_line() + geom_point() + ggtitle('Average Out Degrees') + ylab('Avg. Degree')
+               geom_line() + geom_point() + ggtitle('Average Out Degree') + ylab('Avg. Degree')
         df <- cbind(sector=rep(names(sectors),sapply(sectors,nrow)),do.call(rbind,sectors))
-        pDegSectors <- pl1 + geom_line(data=df, aes(x=epoch,y=meanDeg.out, color=sector)) + scale_colour_hue(c=45, l=80)
-
-        
-        
-### Plot: variation of weights out of the sectors and network over time
-        pl2 <- ggplot(data=dfDeg, aes(x=epoch, y=meanWeight.out), colour='black') + geom_errorbar(aes(ymin=meanWeight.out-sdsWeight.out, ymax=meanWeight.out+sdsWeight.out), width=0.25) +
-            geom_line() + geom_point() + ggtitle('Average Out Weights') + ylab('Avg. Weight')
-        pSectors.mean.weights.stocks <- pl2 +geom_line(data=df, aes(x=epoch,y=avg.weight.out.links, color=sector)) + scale_colour_hue(c=45, l=80) +
-               ggtitle('Avg. weight per stock')
-        pSectors.mean.weights.edges <- ggplot() + geom_line(data=df, aes(x=epoch,y=avg.weight.out.edges, color=sector)) + scale_colour_hue(c=45, l=80) +
+         ggplot() + geom_line(data=df, aes(x=epoch,y=meanDeg.out, color=sector)) + scale_colour_hue(c=45, l=80) + ggtitle('Mean Degree Out per Stock') + ylab('Degree Out')
+         ggplot() + geom_line(data=df, aes(x=epoch,y=meanDeg.in, color=sector)) + scale_colour_hue(c=45, l=80) + ggtitle('Mean Degree In per Stock') + ylab('DegreeIn')
+         
+### Plot: variation of Weights Out of the sectors and network over time
+#         pl2 <- ggplot(data=dfDeg, aes(x=epoch, y=meanWeight.out), colour='black') + geom_errorbar(aes(ymin=meanWeight.out-sdsWeight.out, ymax=meanWeight.out+sdsWeight.out), width=0.25) +
+#             geom_line() + geom_point() + ggtitle('Average Out Weight') + ylab('Avg. Weight')
+        ggplot() +geom_line(data=df, aes(x=epoch,y=avg.weight.out.links, color=sector)) + scale_colour_hue(c=45, l=80) +
+               ggtitle('Avg. Weight Out per stock')
+        ggplot() + geom_line(data=df, aes(x=epoch,y=avg.weight.out.edges, color=sector)) + scale_colour_hue(c=45, l=80) +
                ggtitle('Avg. weight per edge')
-        pWeightSectorsAbs <- ggplot() + geom_line(data=df, aes(x=epoch,y=weight.out, color=sector)) + scale_colour_hue(c=45, l=80)
+         ggplot() + geom_line(data=df, aes(x=epoch,y=weight.out, color=sector)) + scale_colour_hue(c=45, l=80) + ggtitle('Total Weight Out')
+         ggplot() + geom_line(data=df, aes(x=epoch,y=weight.in, color=sector)) + scale_colour_hue(c=45, l=80) + ggtitle('Total Weight Out')
+         
+      dev.off()
+      
       
       
       
@@ -1033,3 +1032,22 @@ op <- par()
      
      plot(1:85, eigen_net)
      
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     on.exit(par(op))
+     # distribution of plots in a grid
+     par(mfrow=c(2,2), mar=c(0,0,0,0)) # plot four figures - 2 rows, 2 columns
+     par(mfrow=c(1,1))
