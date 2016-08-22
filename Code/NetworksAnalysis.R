@@ -2,10 +2,10 @@
 
 
 #problem with distance matrix
+op <- par()
 
 
   rm(list=ls())
-  op <- par()
   on.exit(par(op))
   # distribution of plots in a grid
   par(mfrow=c(2,2), mar=c(0,0,0,0)) # plot four figures - 2 rows, 2 columns
@@ -19,13 +19,15 @@
 
 #        LOAD EXPLORATORY VARIABLES
 
-  setwd('C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE_0910/networks')
-  folderPath <- 'C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE_0910/'
+  setwd('C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE/networks')
+  folderPath <- 'C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE/'
 
-  ret <- read.csv(paste0(folderPath,'/processed/FTSE100_returns.csv'))
+  ret <- read.csv(paste0(folderPath,'/processed/FTSE_returns.csv'))
      samples=21
-  SectorsFull <- read.csv(paste0(folderPath,'FTSE_Stocks.csv'))
-  Sectors <- SectorsFull[2:nrow(SectorsFull),]  # remove AAL, not in sample
+                    #   SectorsFull <- read.csv(paste0(folderPath,'FTSE_Stocks.csv'))
+                    #   Sectors <- SectorsFull[2:nrow(SectorsFull),]  # remove AAL, not in sample
+                        Sectors <- read.csv.....
+                        
   stockNames <- read.csv(paste0(folderPath,'FTSE_indexes.csv'))
   avgDegree <- read.csv('avgDegree.csv', header = F)
   degreeMatrix <- read.csv( 'degreeMatrix.csv', header = F)
@@ -380,6 +382,13 @@
   dev.off()
   
   
+  
+  
+  
+  
+#------------------------------------------------------------------------------------------------------   
+#       FLOW STUDY
+  
   pdf("GainLoss3.pdf")
   for (t in seq_along(netSparse)) {
     plot.igraph(netSparse[[t]], layout = rnd, edge.color = E(netSparse[[t]])$col.contagion2, edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
@@ -390,8 +399,7 @@
   }
   dev.off()
   
-  
-  
+
  
 # only useful if there is not outlyers (like WOS) -> solve by computing the average returns!!
   pdf("GainLossHomogenous.pdf")
@@ -406,10 +414,40 @@
   dev.off()
   
   
+  ### Contagion GIF
+  L <- layout_randomly(netSparse[[1]])
+  ani.options(interval=1)
+  saveGIF({
+    count =0
+    for(t in 1:length(netSparse)){
+      plot(Glist[[i]], layout = L,
+           vertex.label = NA,
+           vertex.size = 10,
+           vertex.color= V(G)$color,
+           vertex.frame.color= "white",
+           edge.arrow.size = 1,
+           edge.color=E(G)$color)
+      count = count +1
+      title(main="Contagion", 
+            sub=paste("Time = ",count), cex.main = 3, cex.sub = 2)
+    }
+  }, interval = 1, movie.name = "demo.gif", ani.width = 1000, ani.height = 1000)
   
-  ### plot hubs networks!!
+  
+  
+  
+  
+  
+  
+  
+  ### plot finance nodes as different shape (maybe they are better propagators)
+  ### plot hubs networks as different shape and encode Company or Stock Value on size
+  
+  
+  
 
   
+#------------------------------------------------------------------------------------------------------   
   
   
   # CORRELATION TESTS
@@ -568,28 +606,7 @@
   
 
 
-### Contagion GIF
-  L <- layout_randomly(netSparse[[1]])
-  ani.options(interval=1)
 
-  saveGIF({
-    count =0
-    
-    for(t in 1:length(netSparse)){
-      plot(Glist[[i]], layout = L,
-           vertex.label = NA,
-           vertex.size = 10,
-           vertex.color= V(G)$color,
-           vertex.frame.color= "white",
-           edge.arrow.size = 1,
-           edge.color=E(G)$color)
-      count = count +1
-      title(main="Contagion", 
-            sub=paste("Time = ",count), cex.main = 3, cex.sub = 2)
-    }
-  }, interval = 1, movie.name = "demo.gif", ani.width = 1000, ani.height = 1000)
-  
-  
   
   ####################################################################################################################
   ####################################################################################################################
@@ -934,7 +951,85 @@
      #       col2 = pal(11)
      
      
-     EDGES <- ends(netSparse[[t]], es=E(netSparse[[t]]), names=F)[,]
+    
      
      
+     
+     
+     
+     
+     
+     
+     
+     ###### GEPHI test
+     library(rgexf)
+     for (t in 1:T) {
+     nod <- data.frame(cbind(V(netSparse[[t]]), as.character(V(netSparse[[t]]))))
+     edg <- t(Vectorize(get.edge, vectorize.args='id')(netSparse[[t]], 1:ecount(netSparse[[t]])))
+     write.gexf(nodes = nod, edges = edg, edgesWeight = E(netSparse[[t]])$weight, defaultedgetype = "directed", output = paste0('t',t,'.gexf'))
+                #, nodesAtt = nodes_att, edgesAtt = edges_att, nodesVizAtt = nodes_att_viz, edgesVizAtt = edges_att_viz, 
+     routput = "lesmis.gexf")
+     }
+     write.gexf(nod,edg)
+     
+     
+     
+     ecount(netSparse[[24]])
+     
+     
+     #######prueba de dynamic networks (animations)
+     library(ndtv)
+     library(intergraph)
+     nett <- lapply(netSparse2, function(x) asNetwork(x, directed=TRUE))
+     tnet<-networkDynamic(network.list=nett)
+     render.d3movie(tnet, vertex.col='color', edge.col='gray', displaylabels=FALSE)
+#      render.animation(tnet)
+#      ani.replay()
+
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+      
+     
+     ######## Network measures
+     
+     netprueba2 <- netSparse[[1]]
+     E(netprueba2)$weight <- absWeights[[1]]
+     incloseness <- igraph::closeness(netprueba2, mode='in')
+     clos <- data.frame(cbind(as.character(info.stocks[[1]]$stocks), as.character(info.stocks[[1]]$sectors), incloseness))
+     names(clos) <- c('stocks', 'sectors', 'incloseness')
+     ggplot(clos, aes(x=stocks, y=incloseness, color=sectors)) + geom_point() + coord_flip()
+      
+          
+     betweenness <- igraph::betweenness(netSparse[[1]])
+     betweenness
+     plot(1:85, betweenness)
+     
+     netUndirected <- as.undirected(netSparse[[1]], mode='collapse')
+     ev_obj_net <- igraph::evcent(netUndirected)
+     eigen_net <- ev_obj_net$vector
+     prueba <- data.frame(cbind(as.character(info.stocks[[1]]$stocks), eigen_net))
+     names(prueba) <- c('stocks', 'eigencentrality')
+     ggplot(prueba, aes(x=stocks, y=eigen_net), color='black') + geom_point() + coord_flip()
+     ## tb podemos calcular eigencentrality In and Out, aqui hemos transformado la net en undirected
+     plot(netSparse[[1]])
+     
+     
+     
+     library('qgraph')
+     netprueba <- qgraph(sparseMatrices[[1]])
+     cent <- centrality(netprueba)
+     
+     
+     dev.off()
+     ?closeness
+     
+     plot(1:85, eigen_net)
      

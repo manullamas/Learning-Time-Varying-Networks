@@ -10,7 +10,7 @@ cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla');
 load('dataFile.mat');    % choose dataFile (same as tesla input)
 T= max(ts);
 [N,P] = size(data);
-load('teslaResults_sp0.001_sm0.005.mat'); %result = results; clearvars results;
+load('teslaResults_FTSE.mat'); %result = results; clearvars results;
 result_sign = cell(P,1);
 degreeMatrix = zeros(P,T);
 % Store networks belonging to each epoch in matrices
@@ -66,7 +66,7 @@ end
 avgDegree = mean(degreeMatrix, 2);
 
 % load stocks names as table
-filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\FTSE_indexes.csv';
+filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE\FTSE_indexes.csv';
 delimiter = ',';
 startRow = 2;
 formatSpec = '%*q%q%[^\n\r]';
@@ -81,31 +81,31 @@ fclose(fileID);
 FTSElist = [dataArray{1:end-1}];
 clearvars filename delimiter startRow formatSpec fileID dataArray ans;
 
-% plot avgDegree per asset
-figure()
-plot(1:length(avgDegree), avgDegree,'*')
-hold on
-for u = 1:length(avgDegree)
-    plot(u, avgDegree(u), '*')
-    text(u, avgDegree(u), FTSElist{u})
-    hold on
-    
-   % https://uk.mathworks.com/matlabcentral/answers/156671-how-to-plot-points-in-different-colors-based-on-class
-   % to give different color to different sectors (class)
-end
-line([0 length(avgDegree)+5], [25 25])
-%%%%%%%% name it with sp and sm values!!!
+% % plot avgDegree per asset
+% figure()
+% plot(1:length(avgDegree), avgDegree,'*')
+% hold on
+% for u = 1:length(avgDegree)
+%     plot(u, avgDegree(u), '*')
+%     text(u, avgDegree(u), FTSElist{u})
+%     hold on
+%     
+%    % https://uk.mathworks.com/matlabcentral/answers/156671-how-to-plot-points-in-different-colors-based-on-class
+%    % to give different color to different sectors (class)
+% end
+% line([0 length(avgDegree)+5], [25 25])
+% %%%%%%%% name it with sp and sm values!!!
 
 % Exploring how connections of hubs change over epochs
-for j = 1:length(degreeMatrix)
-    if avgDegree(j) >= 3
-        figure()
-        plot(1:T, degreeMatrix(j,:), '*-')
-        title(FTSElist(j))
-        hold on
-    end
-end
-    
+% for j = 1:length(degreeMatrix)
+%     if avgDegree(j) >= 12
+%         figure()
+%         plot(1:T, degreeMatrix(j,:), '*-')
+%         title(FTSElist(j))
+%         hold on
+%     end
+% end
+%     
 % General info from 1st and last networks 
 matrix_1;
 matrix_12;
@@ -137,7 +137,7 @@ disp('                                   N edges arpund 1000???')
 
 close all;
 
-cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\networks');
+cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE\networks');
 
 % DATA
 tags = [0:1:P]';

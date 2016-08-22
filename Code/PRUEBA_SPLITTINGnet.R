@@ -1,0 +1,272 @@
+library(igraph)
+net.pos <- netSparse[[1]]
+# delete.edges(net.pos, E(net.pos)$weight[E(net.pos)$weight<0])
+# # E(net.pos)$weight[E(net.pos)$weight<0] <- 0
+# net.neg <- netSparse[[1]]
+# delete.edges(net.neg, E(net.neg)$weight[E(net.neg)$weight>0])
+# # E(net.neg)$weight[E(net.neg)$weight>0] <- 0
+# E(net.neg)$weight <- abs(E(net.neg)$weight)
+gpos <- subgraph.edges(graph=netSparse[[1]], eids=which(E(netSparse[[1]])$weight>0), delete.vertices = FALSE)
+gneg <- subgraph.edges(graph=netSparse[[1]], eids=which(E(netSparse[[1]])$weight<0), delete.vertices = FALSE)
+E(gneg)$weight <- abs(E(gneg)$weight)
+
+
+s641_social <- gpos
+
+indegree_social <- igraph::degree(s641_social, mode='in')
+indegree_social
+
+# Outdegree centrality measures how many people the actor directs 
+# social talk to. 
+outdegree_social <- igraph::degree(s641_social, mode='out')
+outdegree_social
+
+# Closeness is the mean geodesic distance between a given node and
+# all other nodes with paths from the given node to the other
+# node. This is close to being the mean shortest path, but 
+# geodesic distances give higher values for more central nodes.
+#
+# In a directed network, we can think of in-closeness centrality
+# as the average number of steps one would have to go through to
+# get TO a given node FROM all other reachable nodes in the
+# network. Out-closeness centrality, not surprisingly, measures
+# the same thing with the directionality reversed.
+
+# In-closeness centrality
+incloseness_social <- igraph::closeness(s641_social, mode='in')
+incloseness_social
+
+# Out-closeness
+outcloseness_social <- igraph::closeness(s641_social, mode='out')
+outcloseness_social
+
+# Betweenness centrality measures the number of shortest paths
+# going through a specific vertex; it is returned by the 
+# betweenness() function. (Recall that in the previous lab we used 
+# a related measure called edge betweenness, which is returned by
+# the edge.betweenness() function.)
+betweenness_social <- igraph::betweenness(s641_social)
+betweenness_social
+
+# Eigenvector centrality gives greater weight to a node the more 
+# it is connected to other highly connected nodes. A node
+# connected to five high-scoring nodes will have higher 
+# eigenvector centrality than a node connected to five low-scoring
+# nodes. Thus, it is often interpreted as measuring a node's
+# network importance.
+# 
+# In directed networks, there are 'In' and 'Out' versions. In
+# information flow studies, for instance, In-Eigenvector scores
+# would reflect which nodes are high on receiving information,
+# while Out-Eigenvector scores would reflect which nodes are high
+# on broadcasting information.
+#
+# For these data, we will simply symmetrize to generate an 
+# undirected eigenvector centrality score.
+#
+# Note that, unlike the other centrality measures, evcent() 
+# returns a complex object rather than a simple vector. Thus, 
+# we need to first get the evcent() output and then select the 
+# eigenvector scores from it.
+s641_social_undirected <- as.undirected(s641_social, mode='collapse')
+ev_obj_social <- igraph::evcent(s641_social_undirected)
+eigen_social <- ev_obj_social$vector
+eigen_social
+
+#####
+# Extra Credit - what code would you write in R 
+# to get the directed versions of eigenvector centrality?
+#####
+
+# To get the summary table, we'll construct a data frame with 
+# the vertices as rows and the centrality scores as columns.
+# 
+# Note that the vertex IDs are NOT the same as the first column
+# of row numbers. This is because we previously removed isolates.
+central_social <- data.frame(V(s641_social)$name, indegree_social, outdegree_social, incloseness_social, outcloseness_social, betweenness_social, eigen_social)
+central_social 
+
+# Now we'll examine the table to find the most central actors 
+# according to the different measures we have. When looking at
+# each of these measures, it's a good idea to have your plot on
+# hand so you can sanity-check the results.
+plot(s641_social, vertex.size=10, vertex.label=V(s641_social)$name,
+     edge.arrow.size = 0.5, layout=layout.fruchterman.reingold,main='')
+
+# Show table sorted by decreasing indegree. The order() function 
+# returns a vector in ascending order; the minus sign flips it 
+# to be descending order. Top actors are 18, 22 and 16.
+central_social[order(-central_social$indegree_social),] 
+
+# Outdegree: 22, 18 and 19.
+central_social[order(-central_social$outdegree_social),] 
+
+# In-closeness: 11, 15 and 18. 
+# NOTE: For some reason, this operation returns strange values;
+# a visual inspection of the plot suggests that 11, 15, and 18
+# are not central actors at all. This could be a bug.
+central_social[order(-central_social$incloseness_social),] 
+
+# Out-closeness: 22, 16, and 19
+central_social[order(-central_social$outcloseness_social),] 
+
+# Eigenvector: 18, 19, and 16
+central_social[order(-central_social$eigen_social),] 
+
+# let's make a plot or two with these summary statistics
+
+# To visualize these data, we can create a barplot for each
+# centrality measure. In all cases, the y-axis is the value of
+# each category and the x-axis is the node number. 
+barplot(central_social$indegree_social, names.arg=central_social$V.s641_social..name, main='inDeg')
+barplot(central_social$outdegree_social, names.arg=central_social$V.s641_social..name, main='outDeg')
+barplot(central_social$incloseness_social, names.arg=central_social$V.s641_social..name, main='inCloseness')
+barplot(central_social$outcloseness_social, names.arg=central_social$V.s641_social..name, main='outCloseness')
+barplot(central_social$betweenness_social, names.arg=central_social$V.s641_social..name, main='betweenness')
+barplot(central_social$eigen_social, names.arg=central_social$V.s641_social..name, main='eigencentrality')
+
+# Question #2 - What can we say about the social actors if we compare the bar plots? 
+# Who seems to run the show in sociable affairs? Who seems to bridge sociable conversations? 
+
+
+###
+# 4. CORRELATIONS BETWEEN CENTRALITY MEASURES
+###
+
+# Now we'll compute correlations betwee the columns to determine
+# how closely these measures of centrality are interrelated. 
+
+# Generate a table of pairwise correlations.
+cor(central_social[,2:7])
+
+# INTERPRETATION:
+#
+# Indegree and outdegree are very closely correlated (rho = 0.95),
+# indicating that social talk with others is reciprocated (i.e.,
+# if you talk to others, they tend to talk back to you).
+# 
+# The same is not true of incloseness and outcloseness (rho = 
+# 0.38), indicating that the closeness calculated from inbound
+# paths is not strongly associated with with closeness from
+# outbound paths.
+# 
+# In- and out-degree are highly correlated with eigenvector
+# centrality, indicating that the students that talk the most to
+# others (or, relatedly, are talked to the most by others) are
+# also the ones that are connected to other highly connected
+# students -- possibly indicating high density cliques around
+# these individuals.
+# 
+# Betweennes shows the highest corelation with outdegree, follwed
+# by indegree. In the case of this particular network, it seems
+# that the individuals that talk to the most others are the
+# likeliest to serve as bridges between the particular cliques
+# (see, e.g., 22 in the plot).
+
+
+
+
+
+
+
+
+
+
+s641_task <- gneg
+
+
+
+indegree_task <- igraph::degree(s641_task, mode='in')
+indegree_task
+
+# Outdegree
+outdegree_task <- igraph::degree(s641_task, mode='out')
+outdegree_task
+
+# In-closeness
+incloseness_task <- igraph::closeness(s641_task, mode='in')
+incloseness_task
+
+# Out-closeness
+outcloseness_task <- igraph::closeness(s641_task, mode='out')
+outcloseness_task
+
+# Betweenness. Note that the closeness measures arent very high
+# for node 22, but the betweenness is off the charts.
+betweenness_task <- igraph::betweenness(s641_task)
+betweenness_task
+
+# Eigenvector
+s641_task_undirected <- as.undirected(s641_task, mode='collapse')
+ev_obj_task <- igraph::evcent(s641_task_undirected)
+eigen_task <-ev_obj_task$vector
+eigen_task
+
+# Generate a data frame with all centrality values
+central_task <- data.frame(V(s641_task)$name, indegree_task, outdegree_task, incloseness_task, outcloseness_task, betweenness_social, eigen_task)
+central_task
+
+# In-degree: 22, 18 and 17
+central_task[order(-central_task$indegree_task),] 
+
+# Outdegree: 22, 18 and 17
+central_task[order(-central_task$outdegree_task),] 
+
+# Incloseness: 22, 18 and 17
+central_task[order(-central_task$incloseness_task),] 
+
+# Outcloseness: 22, 18 and 17
+central_task[order(-central_task$outcloseness_task),] 
+
+# Eigenvector: 22, 18 and 17
+central_task[order(-central_task$eigen_task),] 
+
+# Look at barplots
+barplot(central_task$indegree_task, names.arg=central_task$V.s641_task..name)
+barplot(central_task$outdegree_task, names.arg=central_task$V.s641_task..name)
+barplot(central_task$incloseness_task, names.arg=central_task$V.s641_task..name)
+barplot(central_task$outcloseness_task, names.arg=central_task$V.s641_task..name)
+barplot(central_task$betweenness_task, names.arg=central_task$V.s641_task..name)
+barplot(central_task$eigen_task, names.arg=central_task$V.s641_task..name)
+
+# Question #3 - What can we say about the social actors if we compare the bar plots? 
+# Who seems to run the show in task affairs? Who seems to bridge task conversations? 
+
+
+connectednodes_social = as.numeric(levels(central_social$V.s641_social..name))[central_social$V.s641_social..name]
+connectednodes_task = as.numeric(levels(central_task$V.s641_task..name))[central_task$V.s641_task..name]
+
+# Check that we did this correctly: SSL should have 19 nodes, and 
+# TSL should have 20 nodes.
+length(connectednodes_social) 
+length(connectednodes_task) 
+
+# Extract matches for each data set, take that subset and use
+# columns 2 through 7 to create the correlation matrix. This 
+# computes the correlations based only on the actors in both 
+# graphs (18 in total).
+cor(central_social[which(connectednodes_social %in% connectednodes_task),2:7], central_task[which(connectednodes_task %in% connectednodes_social),2:7])
+
+
+# INTERPRETATION:
+#
+# eigen_task is correlated with betweenness_social (rho=0.83) and
+# outdegree (rho=0.82), possibly because those who are
+# important in talk on tasks also serve as bridges for talk on
+# social issues and have many outbound ties.
+#
+# indegree_task and betweenness_social (rho=0.88), and
+# outdegree_task and betweenness_social (rho=0.88) are correlated,
+# possibly because the number of indegree and outdegree ties a
+# node has with respect to task talk, the more they serve as a
+# bridge on social talk.
+#
+# incloseness_task and incloseness_social (rho=0.86) are
+# correlated, meaning that those who serve in shortest parths past
+# on inbound ties are equivalent for both social talk and task
+# talk, which seems to make sense given the betweenness
+# correlations with network importance and degree between task and
+# social talk more interpretations are possible as well.
+
+# Question #4 - What can we infer about s641 from these results? 
+# What sort of substantive story can we derive from it?

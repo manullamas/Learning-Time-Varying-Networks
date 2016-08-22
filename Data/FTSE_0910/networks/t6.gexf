@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:viz="http://www.gexf.net/1.1draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2016-08-21">
+    <creator>NodosChile</creator>
+    <description>A graph file writing in R using "rgexf"</description>
+    <keywords>gexf graph, NodosChile, R, rgexf</keywords>
+  </meta>
+  <graph mode="static" defaultedgetype="directed">
+    <nodes>
+      <node id="1" label="1"/>
+      <node id="2" label="2"/>
+      <node id="3" label="3"/>
+      <node id="4" label="4"/>
+      <node id="5" label="5"/>
+      <node id="6" label="6"/>
+      <node id="7" label="7"/>
+      <node id="8" label="8"/>
+      <node id="9" label="9"/>
+      <node id="10" label="10"/>
+      <node id="11" label="11"/>
+      <node id="12" label="12"/>
+      <node id="13" label="13"/>
+      <node id="14" label="14"/>
+      <node id="15" label="15"/>
+      <node id="16" label="16"/>
+      <node id="17" label="17"/>
+      <node id="18" label="18"/>
+      <node id="19" label="19"/>
+      <node id="20" label="20"/>
+      <node id="21" label="21"/>
+      <node id="22" label="22"/>
+      <node id="23" label="23"/>
+      <node id="24" label="24"/>
+      <node id="25" label="25"/>
+      <node id="26" label="26"/>
+      <node id="27" label="27"/>
+      <node id="28" label="28"/>
+      <node id="29" label="29"/>
+      <node id="30" label="30"/>
+      <node id="31" label="31"/>
+      <node id="32" label="32"/>
+      <node id="33" label="33"/>
+      <node id="34" label="34"/>
+      <node id="35" label="35"/>
+      <node id="36" label="36"/>
+      <node id="37" label="37"/>
+      <node id="38" label="38"/>
+      <node id="39" label="39"/>
+      <node id="40" label="40"/>
+      <node id="41" label="41"/>
+      <node id="42" label="42"/>
+      <node id="43" label="43"/>
+      <node id="44" label="44"/>
+      <node id="45" label="45"/>
+      <node id="46" label="46"/>
+      <node id="47" label="47"/>
+      <node id="48" label="48"/>
+      <node id="49" label="49"/>
+      <node id="50" label="50"/>
+      <node id="51" label="51"/>
+      <node id="52" label="52"/>
+      <node id="53" label="53"/>
+      <node id="54" label="54"/>
+      <node id="55" label="55"/>
+      <node id="56" label="56"/>
+      <node id="57" label="57"/>
+      <node id="58" label="58"/>
+      <node id="59" label="59"/>
+      <node id="60" label="60"/>
+      <node id="61" label="61"/>
+      <node id="62" label="62"/>
+      <node id="63" label="63"/>
+      <node id="64" label="64"/>
+      <node id="65" label="65"/>
+      <node id="66" label="66"/>
+      <node id="67" label="67"/>
+      <node id="68" label="68"/>
+      <node id="69" label="69"/>
+      <node id="70" label="70"/>
+      <node id="71" label="71"/>
+      <node id="72" label="72"/>
+      <node id="73" label="73"/>
+      <node id="74" label="74"/>
+      <node id="75" label="75"/>
+      <node id="76" label="76"/>
+      <node id="77" label="77"/>
+      <node id="78" label="78"/>
+      <node id="79" label="79"/>
+      <node id="80" label="80"/>
+      <node id="81" label="81"/>
+      <node id="82" label="82"/>
+      <node id="83" label="83"/>
+      <node id="84" label="84"/>
+      <node id="85" label="85"/>
+    </nodes>
+    <edges>
+      <edge id="0" source="1" target="39" weight="-3.8307"/>
+      <edge id="1" source="1" target="41" weight="2.558"/>
+      <edge id="2" source="1" target="74" weight="-0.077827"/>
+      <edge id="3" source="2" target="39" weight="-3.5932"/>
+      <edge id="4" source="2" target="41" weight="2.3535"/>
+      <edge id="5" source="2" target="74" weight="-0.10241"/>
+      <edge id="6" source="3" target="39" weight="-3.1507"/>
+      <edge id="7" source="3" target="41" weight="2.5342"/>
+      <edge id="8" source="3" target="74" weight="-0.13876"/>
+      <edge id="9" source="4" target="39" weight="-1.4058"/>
+      <edge id="10" source="4" target="41" weight="2.186"/>
+      <edge id="11" source="4" target="74" weight="-0.16791"/>
+      <edge id="12" source="5" target="39" weight="-3.2964"/>
+      <edge id="13" source="5" target="41" weight="2.5257"/>
+      <edge id="14" source="5" target="74" weight="-0.021149"/>
+      <edge id="15" source="5" target="81" weight="-0.0125"/>
+      <edge id="16" source="6" target="39" weight="-2.8263"/>
+      <edge id="17" source="6" target="41" weight="2.5739"/>
+      <edge id="18" source="6" target="42" weight="0.36843"/>
+      <edge id="19" source="6" target="74" weight="-0.027664"/>
+      <edge id="20" source="7" target="39" weight="-4.101"/>
+      <edge id="21" source="7" target="41" weight="2.4423"/>
+      <edge id="22" source="7" target="74" weight="-0.15099"/>
+      <edge id="23" source="8" target="39" weight="-4.01"/>
+      <edge id="24" source="8" target="41" weight="2.4134"/>
+      <edge id="25" source="8" target="74" weight="-0.079834"/>
+      <edge id="26" source="8" target="81" weight="-0.057177"/>
+      <edge id="27" source="9" target="39" weight="-3.5605"/>
+      <edge id="28" source="9" target="41" weight="3.5097"/>
+      <edge id="29" source="9" target="74" weight="-0.14862"/>
+      <edge id="30" source="10" target="9" weight="-0.016359"/>
+      <edge id="31" source="10" target="39" weight="-3.975"/>
+      <edge id="32" source="10" target="41" weight="2.4447"/>
+      <edge id="33" source="10" target="74" weight="-0.10376"/>
+      <edge id="34" source="10" target="81" weight="-0.026666"/>
+      <edge id="35" source="11" target="39" weight="-3.0257"/>
+      <edge id="36" source="11" target="41" weight="2.3821"/>
+      <edge id="37" source="11" target="74" weight="-0.14249"/>
+      <edge id="38" source="12" target="39" weight="-3.9349"/>
+      <edge id="39" source="12" target="41" weight="5.2719"/>
+      <edge id="40" source="13" target="39" weight="-2.0936"/>
+      <edge id="41" source="13" target="41" weight="2.3489"/>
+      <edge id="42" source="14" target="39" weight="-3.8542"/>
+      <edge id="43" source="14" target="41" weight="2.655"/>
+      <edge id="44" source="14" target="74" weight="-0.081092"/>
+      <edge id="45" source="14" target="81" weight="-0.012927"/>
+      <edge id="46" source="15" target="39" weight="-3.1812"/>
+      <edge id="47" source="15" target="41" weight="2.3345"/>
+      <edge id="48" source="15" target="74" weight="-0.12863"/>
+      <edge id="49" source="16" target="39" weight="-4.3346"/>
+      <edge id="50" source="16" target="41" weight="4.4364"/>
+      <edge id="51" source="16" target="74" weight="-0.10021"/>
+      <edge id="52" source="17" target="39" weight="-3.4498"/>
+      <edge id="53" source="17" target="41" weight="3.0276"/>
+      <edge id="54" source="17" target="74" weight="-0.067916"/>
+      <edge id="55" source="18" target="39" weight="-3.8057"/>
+      <edge id="56" source="18" target="41" weight="2.7228"/>
+      <edge id="57" source="18" target="74" weight="-0.16218"/>
+      <edge id="58" source="19" target="39" weight="-2.8948"/>
+      <edge id="59" source="19" target="41" weight="2.2134"/>
+      <edge id="60" source="19" target="74" weight="-0.065979"/>
+      <edge id="61" source="19" target="81" weight="-0.011146"/>
+      <edge id="62" source="20" target="39" weight="-3.5821"/>
+      <edge id="63" source="20" target="41" weight="2.4504"/>
+      <edge id="64" source="20" target="74" weight="-0.050555"/>
+      <edge id="65" source="21" target="9" weight="-0.03772"/>
+      <edge id="66" source="21" target="39" weight="-3.7166"/>
+      <edge id="67" source="21" target="41" weight="2.4448"/>
+      <edge id="68" source="21" target="74" weight="-0.098078"/>
+      <edge id="69" source="22" target="39" weight="-3.754"/>
+      <edge id="70" source="22" target="41" weight="2.5627"/>
+      <edge id="71" source="22" target="74" weight="-0.064333"/>
+      <edge id="72" source="23" target="39" weight="-3.712"/>
+      <edge id="73" source="23" target="41" weight="2.5195"/>
+      <edge id="74" source="23" target="74" weight="-0.1119"/>
+      <edge id="75" source="24" target="39" weight="-2.9182"/>
+      <edge id="76" source="24" target="41" weight="3.0082"/>
+      <edge id="77" source="24" target="74" weight="-0.013447"/>
+      <edge id="78" source="25" target="39" weight="-3.7646"/>
+      <edge id="79" source="25" target="41" weight="2.9404"/>
+      <edge id="80" source="25" target="74" weight="-0.078428"/>
+      <edge id="81" source="26" target="39" weight="-3.674"/>
+      <edge id="82" source="26" target="41" weight="2.8141"/>
+      <edge id="83" source="26" target="74" weight="-0.11738"/>
+      <edge id="84" source="27" target="9" weight="-0.010643"/>
+      <edge id="85" source="27" target="39" weight="-3.7828"/>
+      <edge id="86" source="27" target="41" weight="2.5297"/>
+      <edge id="87" source="27" target="74" weight="-0.095028"/>
+      <edge id="88" source="27" target="81" weight="-0.011866"/>
+      <edge id="89" source="28" target="39" weight="-3.598"/>
+      <edge id="90" source="28" target="41" weight="5.2677"/>
+      <edge id="91" source="29" target="39" weight="-3.7533"/>
+      <edge id="92" source="29" target="41" weight="3.1141"/>
+      <edge id="93" source="29" target="74" weight="-0.065447"/>
+      <edge id="94" source="30" target="39" weight="-3.3218"/>
+      <edge id="95" source="30" target="41" weight="3.435"/>
+      <edge id="96" source="31" target="39" weight="-3.2192"/>
+      <edge id="97" source="31" target="41" weight="2.9359"/>
+      <edge id="98" source="32" target="39" weight="-2.7685"/>
+      <edge id="99" source="32" target="41" weight="3.2113"/>
+      <edge id="100" source="33" target="39" weight="-3.4037"/>
+      <edge id="101" source="33" target="41" weight="3.1673"/>
+      <edge id="102" source="34" target="39" weight="-2.5966"/>
+      <edge id="103" source="34" target="41" weight="3.7479"/>
+      <edge id="104" source="34" target="74" weight="-0.13124"/>
+      <edge id="105" source="35" target="39" weight="-4.0285"/>
+      <edge id="106" source="35" target="41" weight="2.4599"/>
+      <edge id="107" source="35" target="74" weight="-0.12038"/>
+      <edge id="108" source="36" target="39" weight="-3.4255"/>
+      <edge id="109" source="36" target="41" weight="4.8342"/>
+      <edge id="110" source="37" target="39" weight="-3.513"/>
+      <edge id="111" source="37" target="41" weight="2.7649"/>
+      <edge id="112" source="37" target="74" weight="-0.11967"/>
+      <edge id="113" source="38" target="39" weight="-3.0237"/>
+      <edge id="114" source="38" target="41" weight="2.906"/>
+      <edge id="115" source="38" target="74" weight="-0.15853"/>
+      <edge id="116" source="39" target="41" weight="2.4402"/>
+      <edge id="117" source="39" target="74" weight="-0.059367"/>
+      <edge id="118" source="40" target="9" weight="-0.010327"/>
+      <edge id="119" source="40" target="39" weight="-3.7514"/>
+      <edge id="120" source="40" target="41" weight="2.9842"/>
+      <edge id="121" source="40" target="74" weight="-0.02275"/>
+      <edge id="122" source="40" target="81" weight="-0.010051"/>
+      <edge id="123" source="41" target="39" weight="-2.5503"/>
+      <edge id="124" source="41" target="42" weight="0.86803"/>
+      <edge id="125" source="42" target="39" weight="-2.8308"/>
+      <edge id="126" source="42" target="41" weight="3.914"/>
+      <edge id="127" source="42" target="74" weight="-0.047788"/>
+      <edge id="128" source="43" target="39" weight="-3.6413"/>
+      <edge id="129" source="43" target="41" weight="2.1666"/>
+      <edge id="130" source="43" target="53" weight="0.50745"/>
+      <edge id="131" source="44" target="39" weight="-3.2105"/>
+      <edge id="132" source="44" target="41" weight="3.0692"/>
+      <edge id="133" source="44" target="74" weight="-0.10477"/>
+      <edge id="134" source="45" target="9" weight="-0.012894"/>
+      <edge id="135" source="45" target="39" weight="-3.6218"/>
+      <edge id="136" source="45" target="41" weight="2.6531"/>
+      <edge id="137" source="45" target="74" weight="-0.089486"/>
+      <edge id="138" source="46" target="9" weight="-0.013889"/>
+      <edge id="139" source="46" target="39" weight="-3.743"/>
+      <edge id="140" source="46" target="41" weight="2.2993"/>
+      <edge id="141" source="46" target="74" weight="-0.092783"/>
+      <edge id="142" source="46" target="81" weight="-0.010356"/>
+      <edge id="143" source="47" target="39" weight="-3.8279"/>
+      <edge id="144" source="47" target="41" weight="2.557"/>
+      <edge id="145" source="47" target="74" weight="-0.11241"/>
+      <edge id="146" source="48" target="39" weight="-3.5813"/>
+      <edge id="147" source="48" target="41" weight="3.0443"/>
+      <edge id="148" source="48" target="74" weight="-0.12966"/>
+      <edge id="149" source="49" target="39" weight="-2.6337"/>
+      <edge id="150" source="49" target="41" weight="3.0025"/>
+      <edge id="151" source="50" target="39" weight="-2.5167"/>
+      <edge id="152" source="50" target="41" weight="2.6131"/>
+      <edge id="153" source="51" target="39" weight="-3.7001"/>
+      <edge id="154" source="51" target="41" weight="2.8363"/>
+      <edge id="155" source="51" target="74" weight="-0.058783"/>
+      <edge id="156" source="52" target="9" weight="-0.011808"/>
+      <edge id="157" source="52" target="39" weight="-3.7571"/>
+      <edge id="158" source="52" target="41" weight="2.5342"/>
+      <edge id="159" source="52" target="74" weight="-0.22033"/>
+      <edge id="160" source="52" target="81" weight="-0.012805"/>
+      <edge id="161" source="53" target="39" weight="-1.9475"/>
+      <edge id="162" source="53" target="41" weight="1.8535"/>
+      <edge id="163" source="54" target="39" weight="-3.1473"/>
+      <edge id="164" source="54" target="41" weight="2.101"/>
+      <edge id="165" source="54" target="74" weight="-0.18971"/>
+      <edge id="166" source="55" target="9" weight="-0.01617"/>
+      <edge id="167" source="55" target="39" weight="-3.1407"/>
+      <edge id="168" source="55" target="41" weight="2.1113"/>
+      <edge id="169" source="55" target="74" weight="-0.16432"/>
+      <edge id="170" source="56" target="39" weight="-3.644"/>
+      <edge id="171" source="56" target="41" weight="2.4329"/>
+      <edge id="172" source="56" target="74" weight="-0.26788"/>
+      <edge id="173" source="57" target="39" weight="-3.8525"/>
+      <edge id="174" source="57" target="41" weight="3.6667"/>
+      <edge id="175" source="57" target="74" weight="-0.16749"/>
+      <edge id="176" source="58" target="39" weight="-1.4794"/>
+      <edge id="177" source="58" target="41" weight="2.9191"/>
+      <edge id="178" source="58" target="74" weight="-0.19805"/>
+      <edge id="179" source="59" target="39" weight="-3.478"/>
+      <edge id="180" source="59" target="41" weight="2.5649"/>
+      <edge id="181" source="60" target="9" weight="-0.012023"/>
+      <edge id="182" source="60" target="39" weight="-1.2273"/>
+      <edge id="183" source="60" target="41" weight="1.5283"/>
+      <edge id="184" source="61" target="9" weight="-0.032066"/>
+      <edge id="185" source="61" target="39" weight="-2.793"/>
+      <edge id="186" source="61" target="41" weight="2.1955"/>
+      <edge id="187" source="62" target="39" weight="-3.5769"/>
+      <edge id="188" source="62" target="41" weight="2.8391"/>
+      <edge id="189" source="62" target="74" weight="-0.090272"/>
+      <edge id="190" source="63" target="39" weight="-3.9136"/>
+      <edge id="191" source="63" target="41" weight="2.9642"/>
+      <edge id="192" source="63" target="74" weight="-0.14096"/>
+      <edge id="193" source="63" target="81" weight="-0.014564"/>
+      <edge id="194" source="64" target="9" weight="-0.016777"/>
+      <edge id="195" source="64" target="39" weight="-2.831"/>
+      <edge id="196" source="64" target="41" weight="2.9827"/>
+      <edge id="197" source="64" target="74" weight="-0.054067"/>
+      <edge id="198" source="64" target="81" weight="-0.021199"/>
+      <edge id="199" source="65" target="39" weight="-2.9392"/>
+      <edge id="200" source="65" target="41" weight="2.9189"/>
+      <edge id="201" source="65" target="74" weight="-0.12425"/>
+      <edge id="202" source="66" target="9" weight="-0.029569"/>
+      <edge id="203" source="66" target="13" weight="0.011412"/>
+      <edge id="204" source="66" target="31" weight="0.014083"/>
+      <edge id="205" source="66" target="39" weight="-3.7898"/>
+      <edge id="206" source="66" target="40" weight="-0.013102"/>
+      <edge id="207" source="66" target="41" weight="2.7747"/>
+      <edge id="208" source="66" target="48" weight="-0.012955"/>
+      <edge id="209" source="66" target="54" weight="0.016024"/>
+      <edge id="210" source="66" target="74" weight="-0.082138"/>
+      <edge id="211" source="66" target="81" weight="-0.040165"/>
+      <edge id="212" source="67" target="39" weight="-3.8188"/>
+      <edge id="213" source="67" target="41" weight="2.4299"/>
+      <edge id="214" source="67" target="81" weight="-0.022631"/>
+      <edge id="215" source="68" target="39" weight="-3.8073"/>
+      <edge id="216" source="68" target="41" weight="2.9301"/>
+      <edge id="217" source="68" target="74" weight="-0.11284"/>
+      <edge id="218" source="69" target="9" weight="-0.014912"/>
+      <edge id="219" source="69" target="39" weight="-3.2936"/>
+      <edge id="220" source="69" target="41" weight="3.4944"/>
+      <edge id="221" source="69" target="74" weight="-0.049197"/>
+      <edge id="222" source="69" target="81" weight="-0.021325"/>
+      <edge id="223" source="70" target="39" weight="-3.4626"/>
+      <edge id="224" source="70" target="41" weight="2.7266"/>
+      <edge id="225" source="70" target="74" weight="-0.0822"/>
+      <edge id="226" source="70" target="81" weight="-0.015793"/>
+      <edge id="227" source="71" target="39" weight="-3.9809"/>
+      <edge id="228" source="71" target="41" weight="2.7517"/>
+      <edge id="229" source="71" target="74" weight="-0.044094"/>
+      <edge id="230" source="72" target="9" weight="-0.013139"/>
+      <edge id="231" source="72" target="39" weight="-3.5382"/>
+      <edge id="232" source="72" target="41" weight="2.5554"/>
+      <edge id="233" source="72" target="74" weight="-0.091061"/>
+      <edge id="234" source="72" target="81" weight="-0.017675"/>
+      <edge id="235" source="73" target="39" weight="-3.7879"/>
+      <edge id="236" source="73" target="41" weight="2.6663"/>
+      <edge id="237" source="73" target="74" weight="-0.13356"/>
+      <edge id="238" source="74" target="39" weight="-2.3989"/>
+      <edge id="239" source="74" target="41" weight="3.3619"/>
+      <edge id="240" source="74" target="81" weight="-0.064252"/>
+      <edge id="241" source="75" target="9" weight="-0.11676"/>
+      <edge id="242" source="75" target="39" weight="-3.7529"/>
+      <edge id="243" source="75" target="41" weight="2.7768"/>
+      <edge id="244" source="75" target="74" weight="-0.11442"/>
+      <edge id="245" source="75" target="81" weight="-0.023004"/>
+      <edge id="246" source="76" target="39" weight="-3.5187"/>
+      <edge id="247" source="76" target="41" weight="3.2866"/>
+      <edge id="248" source="76" target="74" weight="-0.088219"/>
+      <edge id="249" source="77" target="9" weight="-0.010459"/>
+      <edge id="250" source="77" target="39" weight="-2.7949"/>
+      <edge id="251" source="77" target="41" weight="2.5816"/>
+      <edge id="252" source="77" target="74" weight="-0.090185"/>
+      <edge id="253" source="77" target="81" weight="-0.010553"/>
+      <edge id="254" source="78" target="39" weight="-3.8502"/>
+      <edge id="255" source="78" target="41" weight="2.4302"/>
+      <edge id="256" source="78" target="74" weight="-0.048452"/>
+      <edge id="257" source="79" target="39" weight="-3.7308"/>
+      <edge id="258" source="79" target="41" weight="2.2078"/>
+      <edge id="259" source="79" target="74" weight="-0.061541"/>
+      <edge id="260" source="80" target="9" weight="-0.022843"/>
+      <edge id="261" source="80" target="39" weight="-3.7358"/>
+      <edge id="262" source="80" target="41" weight="2.7048"/>
+      <edge id="263" source="80" target="74" weight="-0.082032"/>
+      <edge id="264" source="81" target="39" weight="-1.2222"/>
+      <edge id="265" source="81" target="41" weight="2.6317"/>
+      <edge id="266" source="81" target="74" weight="-0.1102"/>
+      <edge id="267" source="82" target="39" weight="-3.5127"/>
+      <edge id="268" source="82" target="41" weight="2.0464"/>
+      <edge id="269" source="82" target="74" weight="-0.11061"/>
+      <edge id="270" source="82" target="81" weight="-0.022528"/>
+      <edge id="271" source="84" target="39" weight="-3.111"/>
+      <edge id="272" source="84" target="41" weight="2.4803"/>
+      <edge id="273" source="84" target="74" weight="-0.016578"/>
+      <edge id="274" source="85" target="39" weight="-3.3953"/>
+      <edge id="275" source="85" target="41" weight="2.8119"/>
+      <edge id="276" source="85" target="74" weight="-0.054509"/>
+    </edges>
+  </graph>
+</gexf>
+

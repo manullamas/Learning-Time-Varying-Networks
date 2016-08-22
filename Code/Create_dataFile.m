@@ -10,38 +10,43 @@
 
 %% Load data (preprocesed in R)
  
-returns = csvread('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\processed\FTSE100_returns.csv', 1, 0);
+returns = csvread('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE\processed\FTSE_returns.csv', 1, 0);
 %StockNotNorm = csvread('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\StocksNotNorm.csv', 1, 0);
 % Select rows to fit
 %returns = returns(1:252,:);   % from 1jan to 12dec 2009
 
-% filename = names of the stocks
-filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\processed\FTSE_names.csv';
-delimiter = '';
-startRow = 2;
-formatSpec = '%q%[^\n\r]';
-fileID = fopen(filename,'r');
-dataArray = textscan(fileID, formatSpec, 'Delimiter', delimiter, 'HeaderLines' ,startRow-1, 'ReturnOnError', false);
-fclose(fileID);
-StockNames = dataArray{:, 1};
-clearvars filename delimiter startRow formatSpec fileID dataArray ans;
-
-% filename = dates
-filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\processed\DatesReturns.csv';
-delimiter = '';
-startRow = 2;
-formatSpec = '%{yyyy-MM-dd}D%[^\n\r]';
-fileID = fopen(filename,'r');
-dataArray = textscan(fileID, formatSpec, 'Delimiter', delimiter, 'HeaderLines' ,startRow-1, 'ReturnOnError', false);
-fclose(fileID);
-Dates = dataArray{:, 1};
-clearvars filename delimiter startRow formatSpec fileID dataArray ans;
+% % filename = names of the stocks
+% filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE\processed\FTSE_names.csv';
+% delimiter = '';
+% startRow = 2;
+% formatSpec = '%q%[^\n\r]';
+% fileID = fopen(filename,'r');
+% dataArray = textscan(fileID, formatSpec, 'Delimiter', delimiter, 'HeaderLines' ,startRow-1, 'ReturnOnError', false);
+% fclose(fileID);
+% StockNames = dataArray{:, 1};
+% clearvars filename delimiter startRow formatSpec fileID dataArray ans;
+% % filename = dates
+% filename = 'C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\processed\DatesReturns.csv';
+% delimiter = '';
+% startRow = 2;
+% formatSpec = '%{yyyy-MM-dd}D%[^\n\r]';
+% fileID = fopen(filename,'r');
+% dataArray = textscan(fileID, formatSpec, 'Delimiter', delimiter, 'HeaderLines' ,startRow-1, 'ReturnOnError', false);
+% fclose(fileID);
+% Dates = dataArray{:, 1};
+% clearvars filename delimiter startRow formatSpec fileID dataArray ans;
 
 %Dates = Dates(1:252);
 
 %% Create epoch vector
-   Nepochs = 24;
- n = floor(length(Dates)/Nepochs);    % Number of samples on each epoch 
+
+
+% %%%%
+% StockNames = StockNames{2:length(StockNames)};
+% %%%%
+
+   Nepochs = 19;
+ n = floor(size(returns,1)/Nepochs);    % Number of samples on each epoch 
  x = (1:Nepochs)';     % Epochs
  r = repmat(x,1,n)';
  ts = r(:);
@@ -55,7 +60,7 @@ for i = 1:nStocks
         GainLoss(i,t) = returns(t*n,i)-returns((t-1)*n+1,i);        
     end
 end
-cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE_0910\networks');
+cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Data\FTSE\networks');
 csvwrite('GainLoss.csv', GainLoss)
 clearvars i t
 
@@ -94,7 +99,7 @@ clearvars n x r i j t
 
 cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla')
 matobj = matfile('dataFile','Writable',true);
-matobj.data = returns;   %[NxP] ->  N: n samples (time steps);  P: n Nodes/stocks
+matobj.data = returns;   %[NxP] ->  N: n observations;  P: n Nodes/stocks
 matobj.ts = ts;  % [Nx1] ->  ts(i)= time stamp/epoch associated to i in data
 
 

@@ -100,6 +100,6 @@ for m=start:ed   %going through the NODES
 end
 
 cd('C:\Users\Manuel\Desktop\Southampton\MasterThesis\Code\tesla')
-matobj = matfile('teslaResults_sp0.001_sm0.03.mat','Writable',true);
+matobj = matfile('teslaResults_FTSE.mat','Writable',true);
 matobj.result = result; 
 
