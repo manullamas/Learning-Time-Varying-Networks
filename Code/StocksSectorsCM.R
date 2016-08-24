@@ -25,32 +25,32 @@ write.csv(Stocks, file = paste0(path1,"FTSE_Stocks.csv"),row.names=FALSE)
 #####################################################################################
 #####################################################################################
 
-####### After finding the sectors (manually::  Bloomberg) establish sector type:
-
+####### After finding the sectors (manually:::Bloomberg) assign sector type alphabetically
+####### as ggplot does when coloring (consistency)
 rm(list=ls())
 path1 <- 'C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE/'
-Stocks <- read.csv(file = paste0(path1,"FTSE_Stocks.csv"),)
+Stocks <- read.csv(file = paste0(path1,"FTSE_Stocks.csv"))
 
 for (i in 1:nrow(Stocks)) {
-  if (Stocks[i,2]=='Materials') {
+  if (Stocks[i,2]=='Communications') {
       Stocks[i,3] <- 1
   } else if (Stocks[i,2]=='Consumer Staples') {
       Stocks[i,3] <- 2
-  } else if (Stocks[i,2]=='Financials') {
+  } else if (Stocks[i,2]=='Consumers Discretionary') {
       Stocks[i,3] <- 3
   } else if (Stocks[i,2]=='Energy') {
     Stocks[i,3] <- 4
-  } else if (Stocks[i,2]=='Health Care') {
+  } else if (Stocks[i,2]=='Financials') {
     Stocks[i,3] <- 5
-  } else if (Stocks[i,2]=='Industrials') {
+  } else if (Stocks[i,2]=='Health Care') {
     Stocks[i,3] <- 6
-  } else if (Stocks[i,2]=='Consumers Discretionary') {
+  } else if (Stocks[i,2]=='Industrials') {
     Stocks[i,3] <- 7
-  } else if (Stocks[i,2]=='Communications') {
+  } else if (Stocks[i,2]=='Materials') {
     Stocks[i,3] <- 8
-  } else if (Stocks[i,2]=='Utilities') {
-    Stocks[i,3] <- 9
   } else if (Stocks[i,2]=='Technology') {
+    Stocks[i,3] <- 9
+  } else if (Stocks[i,2]=='Utilities') {
     Stocks[i,3] <- 10
   }
 }

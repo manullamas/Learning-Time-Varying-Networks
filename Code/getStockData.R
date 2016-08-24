@@ -4,6 +4,7 @@ setwd('C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE')
 startDate <- "2015-01-01"
 # endDate <-
 
+
 options(java.parameters = "-Xmx1024m")
 library(XLConnect)
 ## Get tickers and process dataframe

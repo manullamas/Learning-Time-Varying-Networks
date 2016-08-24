@@ -73,10 +73,6 @@ ev_obj_social <- igraph::evcent(s641_social_undirected)
 eigen_social <- ev_obj_social$vector
 eigen_social
 
-#####
-# Extra Credit - what code would you write in R 
-# to get the directed versions of eigenvector centrality?
-#####
 
 # To get the summary table, we'll construct a data frame with 
 # the vertices as rows and the centrality scores as columns.
@@ -93,27 +89,16 @@ central_social
 plot(s641_social, vertex.size=10, vertex.label=V(s641_social)$name,
      edge.arrow.size = 0.5, layout=layout.fruchterman.reingold,main='')
 
-# Show table sorted by decreasing indegree. The order() function 
-# returns a vector in ascending order; the minus sign flips it 
-# to be descending order. Top actors are 18, 22 and 16.
+
 central_social[order(-central_social$indegree_social),] 
 
-# Outdegree: 22, 18 and 19.
 central_social[order(-central_social$outdegree_social),] 
 
-# In-closeness: 11, 15 and 18. 
-# NOTE: For some reason, this operation returns strange values;
-# a visual inspection of the plot suggests that 11, 15, and 18
-# are not central actors at all. This could be a bug.
 central_social[order(-central_social$incloseness_social),] 
 
-# Out-closeness: 22, 16, and 19
 central_social[order(-central_social$outcloseness_social),] 
 
-# Eigenvector: 18, 19, and 16
 central_social[order(-central_social$eigen_social),] 
-
-# let's make a plot or two with these summary statistics
 
 # To visualize these data, we can create a barplot for each
 # centrality measure. In all cases, the y-axis is the value of
@@ -125,15 +110,11 @@ barplot(central_social$outcloseness_social, names.arg=central_social$V.s641_soci
 barplot(central_social$betweenness_social, names.arg=central_social$V.s641_social..name, main='betweenness')
 barplot(central_social$eigen_social, names.arg=central_social$V.s641_social..name, main='eigencentrality')
 
-# Question #2 - What can we say about the social actors if we compare the bar plots? 
-# Who seems to run the show in sociable affairs? Who seems to bridge sociable conversations? 
 
 
-###
-# 4. CORRELATIONS BETWEEN CENTRALITY MEASURES
-###
+###########################################################################################3
 
-# Now we'll compute correlations betwee the columns to determine
+# Now we'll compute correlations between the columns to determine
 # how closely these measures of centrality are interrelated. 
 
 # Generate a table of pairwise correlations.

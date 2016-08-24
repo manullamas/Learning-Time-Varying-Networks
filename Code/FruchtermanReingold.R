@@ -1,4 +1,6 @@
 
+
+
 pdf("FruchtermanReingold.pdf")
 for (t in seq_along(netSparse)) {
   plot.igraph(netSparse[[t]], 
