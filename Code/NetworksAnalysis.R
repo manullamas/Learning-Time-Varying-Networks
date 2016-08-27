@@ -1,6 +1,6 @@
             
 rm(list=ls())
-op <- par()
+# op <- par()
 
 
 
@@ -173,8 +173,10 @@ op <- par()
     
     
   ##       Set Vertex/Edges attributes & Layouts
-  library(RColorBrewer)
-  col = list(color = brewer.pal(11, 'Paired'))
+#   library(RColorBrewer)
+#   col = list(color = brewer.pal(11, 'Paired'))
+  source("C:/Users/Manuel/Desktop/Southampton/MasterThesis/Code/gg_color_hue.R")
+  ggcolor <- gg_color_hue(10)
   col.GL <- colorRampPalette(c("dark red", '#91cf60'))
   pal.GLsimple <- c('#fc8d59', 'white', '#91cf60')
 #   pal.GL <- col.GL(10)
@@ -213,7 +215,7 @@ op <- par()
     ### Vertices
         V(netSparse[[t]])$sectors <- Sectors$Sector
         V(netSparse[[t]])$sector.type <- Sectors$Sector.type
-        V(netSparse[[t]])$color <- col$color[Sectors$Sector.type]
+        V(netSparse[[t]])$color <- ggcolor[Sectors$Sector.type]
         GainLoss.order <- findInterval(GainLossMatrix[,t], sort(GainLossMatrix[,t]))
         V(netSparse[[t]])$col.contagion <- pal.GLsimple[sign(GainLossMatrix[,t])+2]
         V(netSparse[[t]])$col.contagion2 <- col.GL(12)[as.numeric(cut(GainLossMatrix[,t], breaks=seq(from=-max(abs(GainLossMatrix[,t])), to=max(abs(GainLossMatrix[,t])), length.out = 13)), include.lowest=TRUE)]
@@ -224,7 +226,7 @@ op <- par()
         
 #         V(netCorrSparse[[t]])$sectors <- Sectors$Sector
 #         V(netCorrSparse[[t]])$sector.type <- Sectors$Sector.type
-#         V(netCorrSparse[[t]])$color <- col$color[Sectors$Sector.type]
+#         V(netCorrSparse[[t]])$color <- ggcolor[Sectors$Sector.type]
 #   
         
     ### Edges
@@ -262,7 +264,7 @@ op <- par()
 
             }
         info.stocks[[t]] <- cbind(info.stocks[[t]], weights.out, weights.in, weights.corr)
-        names(info.stocks[[t]]) <- c('stocks', 'sector.type', 'sectors', 'deg.total', 'deg.out', 'deg.in', 'deg.corr', 'weights.out', 'weights.in', 'weights.corr')
+        names(info.stocks[[t]]) <- c('stocks', 'sector.type', 'sectors', 'deg.total', 'deg.out', 'deg.in', 'deg.corr', 'avg.weight.in', 'sd.weight.in', 'weights.out', 'weights.in', 'weights.corr')
   
     
     ### Layouts
@@ -293,11 +295,7 @@ op <- par()
 
 
   
-  ####################################################################################################################
-  ####################################################################################################################
-  ####################################################################################################################
-  
-  
+
                      ############################
                      ######    ANALYSIS    ######
                      ############################
@@ -314,7 +312,7 @@ op <- par()
   info.epochs <- cbind(1:T, maxValues, minValues, means, sds)
   
   # matplot(info.stocks, type = c("b"), pch=1, col = 1:3, main = 'Network degrees')
-  # text(1:nStocks, info.stocks$deg.total, labels = info.stocks$stocks, col = col$color[Sectors$Sector.type])
+  # text(1:nStocks, info.stocks$deg.total, labels = info.stocks$stocks, col = ggcolor[Sectors$Sector.type])
   # legend(x = 60, y = 95, legend = c('deg.out','deg.in','deg.total'), col=1:3, pch=1, pt.cex=2, cex=.8, ncol=1, y.intersp = 0.2)
 
   ###  cent <- lapply(netSparse, function(x) centralization.degree(x)$centralization)
@@ -350,7 +348,11 @@ op <- par()
       }
     }
   names(sectors) <- info.sectors[[1]]$sector
-
+  
+  
+  
+  
+  
 #     ggplot(info.sectors[[t]], aes(x = sector, y = deg.in, fill = sector)) + geom_bar(stat = 'identity') +
 #       theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
 #       theme_bw() + labs(x = '', y = 'Degree In') + ggtitle('Degree by Sectors')
@@ -370,398 +372,9 @@ op <- par()
 #     
   
 
+  ####################################################################################################################
+  ####################################################################################################################
+  ####################################################################################################################
   
 #------------------------------------------------------------------------------------------    
-  
-  
-  #-------------------------------#
-  # ANALYSIS OF INDIVIDUAL STOCKS #
-  #-------------------------------#
-  op <- par()
-  # on.exit(par(op))
-  # distribution of plots in a grid
-  # par(mfrow=c(2,2), mar=c(0,0,0,0))
-      library(ggplot2)
-      library(grid)
-      source("C:/Users/Manuel/Desktop/Southampton/MasterThesis/Code/multiplot.R")
-      source("C:/Users/Manuel/Desktop/Southampton/MasterThesis/Code/gg_color_hue.R")
-      pdf("Analysis_plots.pdf")
-  
-  for (t in seq_along(netSparse)) {
-  
-    h1 <- qplot(deg.in[[t]],
-          geom="histogram",
-          binwidth = 1,  
-          main = paste0('t = ',t), 
-          xlab = "Deg.in")
-    h2 <- qplot(weights[[t]],
-                geom="histogram",
-                binwidth = 0.2,
-                xlab = "Weights") +
-          geom_vline(data=hubs.in[[t]], aes(xintercept=avg.weight.in), color='red', show.legend=TRUE) +
-          geom_text(aes(hubs.in[[t]]$avg.weight.in, 200 ,label = hubs.in[[t]]$stocks, vjust=1, hjust=0))
-          #main = paste0('t = ',t), 
-          #fill=I("blue"), 
-          #col=I("red"), 
-          #alpha=I(.2)
-    #text(1:nStocks, deg.in[[t]]+2, labels = Sectors$x, col = 'black')
-    dIn <-   ggplot(info.stocks[[t]], aes(x = reorder(stocks, as.numeric(sectors)), 
-                         y = deg.in, fill = sectors)) + geom_bar(stat = 'identity') +
-                         theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                         theme_bw() + labs(x = '', y = 'Degree In') + theme(legend.position="none",
-                         axis.text.y =element_blank()) +  ###element_text(face=NULL, size=6, angle=0)) +
-                         geom_text(aes(label = reorder(stocks, as.numeric(sectors))), size = 3)
-    dOut <-   ggplot(info.stocks[[t]], aes(x = reorder(stocks, as.numeric(sectors)), 
-                         y = deg.out, fill = sectors)) + geom_bar(stat = 'identity') +
-                         theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                         theme_bw() + labs(x = '', y = 'Degree Out') + theme(legend.position="none",
-                         axis.text.y =element_blank()) +
-                         geom_text(aes(label = reorder(stocks, as.numeric(sectors))), size = 3) 
-    wIn <-   ggplot(info.stocks[[t]], aes(x = reorder(stocks, as.numeric(sectors)), 
-                         y = weights.in, fill = sectors)) + geom_bar(stat = 'identity') +
-                         theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                         theme_bw() + labs(x = '', y = 'Weights In') + theme(legend.position="none",
-                         axis.text.y =element_blank()) +
-                         geom_text(aes(label = reorder(stocks, as.numeric(sectors))), size = 3)
-    wOut <-   ggplot(data= info.stocks[[t]], aes(x = reorder(stocks, as.numeric(sectors)), 
-                        y = weights.out, fill = sectors)) + geom_bar(stat = 'identity') +
-                        theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                        theme_bw() + labs(x = '', y = 'Weights Out') + theme(legend.position="none",
-                        axis.text.y =element_blank()) +
-                        geom_text(aes(label = reorder(stocks, as.numeric(sectors))), size = 3)
-    dSin <-   ggplot(info.sectors[[t]], aes(x = sector, y = deg.in, fill = sector)) + geom_bar(stat = 'identity') +
-                        theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                        theme_bw() + labs(x = '', y = 'Degree In') + ggtitle('Degree by Sectors') +
-                        theme(legend.position="none")
-    dSout <-  ggplot(info.sectors[[t]], aes(x = sector, y = deg.out, fill = sector)) + geom_bar(stat = 'identity') +
-                        theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                        theme_bw() + labs(x = '', y = 'Degree Out') + ggtitle('Degree by Sectors') +
-                        theme(legend.position="none")
-    wSin <-   ggplot(info.sectors[[t]], aes(x = sector, y = weight.in, fill = sector)) + geom_bar(stat = 'identity') +
-                        theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                        theme_bw() + labs(x = '', y = 'Weights In') + ggtitle('') +
-                        theme(legend.position="none")
-    wSout <-  ggplot(info.sectors[[t]], aes(x = sector, y = weight.out, fill = sector)) + geom_bar(stat = 'identity') +
-                        theme(axis.text.x = element_text(angle = 90)) + coord_flip() +
-                        theme_bw() + labs(x = '', y = 'Weights Out') + ggtitle('') +
-                        theme(legend.position="none")
-                        
-    multiplot(h1, h2) # , layout = as.matrix(c(1,2,3,3), nrow=2, byrow=TRUE))
-    multiplot(dIn, dOut, dSin, dSout, cols = 2)
-    multiplot(wIn, wOut, wSin, wSout, cols = 2)
-    
-  }
-  dev.off()
-  
-  
-
-#------------------------------------------------------------------------------------------    
-  
-  
-  ### create   info.epochs <- cbind(1:T, maxValues, minValues, means, sds) dataframe (as info.sto)
-
-  
-  #--------------------------------#
-  # ANALYSIS OF THE GLOBAL NETWORK #
-  #--------------------------------#
-  
-  
-    pdf('AnalysisOverTime.pdf')
-### Plot: avg Degree Out of the sectors and network over time
-    sumDeg.out <- sapply(info.stocks, function(x) sum(x$deg.out))
-    meanDeg.out <- sapply(info.stocks, function(x) mean(x$deg.out))
-    sdsDeg.out <- sapply(info.stocks, function(x) sd(x$deg.out))
-    meanWeight.out <- sapply(info.stocks, function(x) mean(x$weights.out))
-    sdsWeight.out <- sapply(info.stocks, function(x) sd(x$weights.out))
-    
-    dfDeg <- data.frame(cbind(1:T, sumDeg.out, meanDeg.out, sdsDeg.out, meanWeight.out, sdsWeight.out))
-    names(dfDeg) <- c('epoch', 'sumDeg.out', 'meanDeg.out', 'sdsDeg.out', 'meanWeight.out', 'sdsWeight.out')
-        pl1 <- ggplot(data=dfDeg, aes(x=epoch, y=meanDeg.out), colour='black') + geom_errorbar(aes(ymin=meanDeg.out-sdsDeg.out, ymax=meanDeg.out+sdsDeg.out), width=0.25) +
-               geom_line() + geom_point() + ggtitle('Average Out Degree') + ylab('Avg. Degree')
-        df <- cbind(sector=rep(names(sectors),sapply(sectors,nrow)),do.call(rbind,sectors))
-         ggplot() + geom_line(data=df, aes(x=epoch,y=meanDeg.out, color=sector)) + scale_colour_hue(c=45, l=80) + ggtitle('Mean Degree Out per Stock') + ylab('Degree Out')
-         ggplot() + geom_line(data=df, aes(x=epoch,y=meanDeg.in, color=sector)) + scale_colour_hue(c=45, l=80) + ggtitle('Mean Degree In per Stock') + ylab('DegreeIn')
-         
-### Plot: variation of Weights Out of the sectors and network over time
-#         pl2 <- ggplot(data=dfDeg, aes(x=epoch, y=meanWeight.out), colour='black') + geom_errorbar(aes(ymin=meanWeight.out-sdsWeight.out, ymax=meanWeight.out+sdsWeight.out), width=0.25) +
-#             geom_line() + geom_point() + ggtitle('Average Out Weight') + ylab('Avg. Weight')
-        ggplot() +geom_line(data=df, aes(x=epoch,y=avg.weight.out.links, color=sector)) + #scale_colour_hue(c=45, l=80) +
-               ggtitle('Avg. Weight Out per stock')
-        ggplot() + geom_line(data=df, aes(x=epoch,y=avg.weight.out.edges, color=sector)) + #scale_colour_hue(c=45, l=80) +
-               ggtitle('Avg. weight per edge')
-         ggplot() + geom_line(data=df, aes(x=epoch,y=weight.out, color=sector)) + #scale_colour_hue(c=45, l=80) + 
-               ggtitle('Total Weight Out')
-         ggplot() + geom_line(data=df, aes(x=epoch,y=weight.in, color=sector)) + #scale_colour_hue(c=45, l=80) 
-               ggtitle('Total Weight In')
-         ggplot() + geom_line(data=df, aes(x=epoch,y=avg.weight.in.links, color=sector)) + #scale_colour_hue(c=45, l=80) + 
-               ggtitle('Avg. Weight In per Stock')
-         ggplot() + geom_line(data=df, aes(x=epoch,y=avg.weight.in.edges, color=sector)) + #scale_colour_hue(c=45, l=80) + 
-               ggtitle('Avg. Weight In per edge')
-         
-         
-      dev.off()
-      
-      
-      
-      
-### Heatmap: Sectors relationships
-        library(plyr)
-        edges.info <- list()
-        sectConnectivity <- list()
-        for (t in 1:T) {
-          edges.info[[t]] <- cbind(data.frame(edge.start[[t]], as.character(info.stocks[[t]]$stocks[edge.start[[t]]]), info.stocks[[t]]$sectors[edge.start[[t]]], info.stocks[[t]]$sector.type[edge.start[[t]]], edge.end[[t]], info.stocks[[t]]$stocks[edge.end[[t]]], info.stocks[[t]]$sectors[edge.end[[t]]], info.stocks[[t]]$sector.type[edge.end[[t]]]))
-          names(edges.info[[t]]) <- c('edge.start', 'stock.start', 'sector.start', 'sectorType.start', 'edge.end', 'stock.end', 'sector.end', 'sectorType.end')  
-          links <- count(edges.info[[t]],vars = c("sectorType.start","sectorType.end"))
-          totalEdges <- nrow(edges.info[[1]])
-          sectConnectivity[[t]] <- data.frame(matrix(ncol=nSectors,nrow=nSectors))
-            for (n in 1:nSectors) {
-                for (m in 1:nSectors) {
-                  freq <- subset(links, sectorType.start==n & sectorType.end==m)$freq
-                  if (length(freq)==0) {
-                    sectConnectivity[[t]][n,m] <- 0
-                  } else if (length(freq)==1) {
-                      sectConnectivity[[t]][n,m] <- subset(links, sectorType.start==n & sectorType.end==m)$freq
-                  }
-                }
-            }
-          names(sectConnectivity[[t]]) <- c('Communications', 'Consumer Staples', 'Consumers Discretionary', 'Energy', 'Financials', 'Health Care', 'Industrials', 'Materials', 'Technology', 'Utilities')
-          row.names(sectConnectivity[[t]]) <- c('Communications', 'Consumer Staples', 'Consumers Discretionary', 'Energy', 'Financials', 'Health Care', 'Industrials', 'Materials', 'Technology', 'Utilities')
-          sectConnectivity[[t]] <- as.matrix(sectConnectivity[[t]])
-          }
-
-        pdf('sectorConnectivity.pdf')
-        library(reshape2)
-#         palf <- colorRampPalette(c('white', 'dark blue'))
-        for (t in 1:T) {
-           heatmap(sectConnectivity[[t]], Rowv = NA, Colv = NA, col = palf(10), scale="none", margins=c(10,10), ylab='Edge Start', xlab='Edge End', main= paste0('t = ', t))
-          melted_sectCon <- melt(sectConnectivity[[t]])
-          ggplot(melted_sectCon, aes(x=Var1, y=Var2)) + geom_tile(aes(fill = value), colour = "white") + 
-                scale_fill_gradient(low = "white", high = "steelblue") +
-                ggtitle('Links between Sectors') + ylab('Edge end') + xlab('Edge start')
-          
-          ####### same plot with weights??
-          }
-        dev.off()
-        
-        
-        
-                #       sectors2 <- list()
-#       sectors2 <- sectors
-#       sectors2[[12]] <- dfDeg
-#       names(sectors2)<- c(names(sectors), 'network') 
-#       pDegEpochNorm <- ggplot() + geom_line(data=df, aes(x=epoch,y=deg.out.norm, color=sector))
-#       
-# put all in the same dataframe to group by id of list!
-
-      
-
-# ### Degree evolution of all stocks
-#   library("reshape2")
-#   library('gridExtra')
-#   library('grid')
-#   pdf('degreeStocks.pdf')
-#   pltList.deg <- list()
-#       for (n in 1:nStocks) {
-#         # df <- data.frame(cbind(1:T, info.stocks[[t]]$deg.out, info.stocks[[t]]$deg.in, info.stocks[[t]]$weights.out, info.stocks[[t]]$weights.in))
-#          degO <- unlist(lapply(info.stocks,"[",n,5,drop=FALSE))
-#          degI <- unlist(lapply(info.stocks,"[",n,6,drop=FALSE))
-#          weO <- unlist(lapply(info.stocks,"[",n,7,drop=FALSE))
-#          weI <- unlist(lapply(info.stocks,"[",n,8,drop=FALSE))
-#          dfD <- data.frame(cbind(1:T, degO, degI, weO, weI))
-#          names(dfD) <- c('epoch', 'degO', 'degI', 'weightsO', 'weightsI')
-#          
-#          pltList.deg[[n]] <- ggplot() + 
-#            geom_line(data=dfD, aes(x = epoch, y = degI, color = "red")) +
-#            geom_line(data=dfD, aes(x = epoch, y = degO, color = "blue"))  +
-#            xlab('epoch') + ylab('Degree') + ggtitle(info.stocks[[t]]$stocks[n]) +
-#            theme(legend.position="none")
-#            # scale_colour_discrete(breaks=c("blue", "red"),labels=c("deg.in", "deg.out"))
-#       }
-#      do.call(grid.arrange,pltList.deg[1:20])
-#      do.call(grid.arrange,pltList.deg[21:40])
-#      do.call(grid.arrange,pltList.deg[41:60])
-#      do.call(grid.arrange,pltList.deg[61:85])
-#      dev.off()
-# #     dfDlong <- melt(dfD, id="epoch")  # convert to long format
-# #     ggplot(dfDlong, aes(x=epoch, y=value, colour=variable)) +
-# #       geom_line()
-#------------------------------------------------------------------------------------------    
-
-  
-  
- ### PCA analysis
-     ir.pca <- prcomp(ret, center = TRUE,  scale. = TRUE)
-     print(ir.pca)
-     plot(ir.pca, type = "l")
-     summary(ir.pca)
-          # use it to reduce dimensionality??
-     
-### k-means analysis
-     
-     pdf('kmeans.pdf')
-        wss <- (nrow(ret)-1)*sum(apply(ret,2,var))
-        for (i in 2:15) wss[i] <- sum(kmeans(ret, centers=i)$withinss)
-          plot(1:15, wss, type="b", xlab="Number of Clusters", ylab="Within groups sum of squares")
-          kmeans.init[[t]] <- kmeans(ret, centers=3)
-          clusplot(ret, kmeans.init[[t]]$cluster, color=TRUE, shade=TRUE, labels=2, lines=0, main='kmeans (all returns)')#, xlim=c(-15,12), ylim=c(-5, 5))
-     dev.off()
-  
-     
-     
-### Hierarchichal clustering
-     library(ggdendro)
-     library(ape)
-     library(dendextend)
-     pdf('HierarchicalClustering.pdf')
-     for (t in 1:T) {
-     d <- dist(t(returns[[t]]), method = "euclidean")
-     fit <- hclust(d, method="ward.D")
-     dend <- as.dendrogram(fit)
-     clustSectors <- info.stocks[[t]]$sector.type
-          hc2 <- plot(dend, main=paste0('t = ', t), cex.axis=0.2)#, horiz=TRUE) # display dendogram
-          groups <- cutree(fit, k=5)
-          # draw dendogram with red borders around the 5 clusters 
-          rect.hclust(fit, k=5, border="red")
-          hc1 <- plot(as.phylo(fit), type = "fan",tip.color = col$color[clustSectors])
-
-#           dhc <- as.dendrogram(fit)
-#           # Rectangular lines
-#           ddata <- dendro_data(dhc, type = "rectangle")
-#           hc2 <- ggplot(segment(ddata)) + 
-#               geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) + 
-#               geom_text(segment(ddata), aes(x=x, y=y, label=info.stocks[[1]]$stocks, hjust=0,color=info.stocks[[1]]$sectors, size=3)) +
-#               coord_flip() + 
-#               scale_y_reverse(expand = c(0.2, 0))
-#           
-#           hc3 <- ggplot(as.ggdend(dend)) + 
-#                 scale_y_reverse(expand = c(0.2, 0)) +
-#                 coord_polar(theta="x")
-#           
-#           
-#           hc3 <- plot(as.phylo(fit),tip.color = col$color[clustSectors])
-          
-#           multiplot(hc1, hc2, cols=2)
-     }
-     dev.off()
-     
-
-  ##todo
-  
-  #  analysis by sectors (relative interlinks and so)
-  #  boxplots of weights (by sectors)
-  #  boxplot of weights (one for each t)
-  #  boxplot of degree (one for each t)
-   # timeline of the degrees and weights of stocks and sectors (so ploted vs t)
-     
-     
-     
-     
-
-     
-     
-     
-     #       pal <- scales::hue_pal(h = c(0, 360) + 15, c = 100, l = 65, h.start = 0, direction = 1)
-     #       col2 = pal(11)
-     
-     
-    
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     ###### GEPHI test
-     library(rgexf)
-     for (t in 1:T) {
-     nod <- data.frame(cbind(V(netSparse[[t]]), as.character(V(netSparse[[t]]))))
-     edg <- t(Vectorize(get.edge, vectorize.args='id')(netSparse[[t]], 1:ecount(netSparse[[t]])))
-     write.gexf(nodes = nod, edges = edg, edgesWeight = E(netSparse[[t]])$weight, defaultedgetype = "directed", output = paste0('t',t,'.gexf'))
-                #, nodesAtt = nodes_att, edgesAtt = edges_att, nodesVizAtt = nodes_att_viz, edgesVizAtt = edges_att_viz, 
-     routput = "lesmis.gexf")
-     }
-     write.gexf(nod,edg)
-     
-     
-     
-     ecount(netSparse[[24]])
-     
-     
-     #######prueba de dynamic networks (animations)
-     library(ndtv)
-     library(intergraph)
-     nett <- lapply(netSparse2, function(x) asNetwork(x, directed=TRUE))
-     tnet<-networkDynamic(network.list=nett)
-     render.d3movie(tnet, vertex.col='color', edge.col='gray', displaylabels=FALSE)
-#      render.animation(tnet)
-#      ani.replay()
-
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-      
-     
-     ######## Network measures
-     
-     netprueba2 <- netSparse[[1]]
-     E(netprueba2)$weight <- absWeights[[1]]
-     incloseness <- igraph::closeness(netprueba2, mode='in')
-     clos <- data.frame(cbind(as.character(info.stocks[[1]]$stocks), as.character(info.stocks[[1]]$sectors), incloseness))
-     names(clos) <- c('stocks', 'sectors', 'incloseness')
-     ggplot(clos, aes(x=stocks, y=incloseness, color=sectors)) + geom_point() + coord_flip()
-      
-          
-     betweenness <- igraph::betweenness(netSparse[[1]])
-     betweenness
-     plot(1:85, betweenness)
-     
-     netUndirected <- as.undirected(netSparse[[1]], mode='collapse')
-     ev_obj_net <- igraph::evcent(netUndirected)
-     eigen_net <- ev_obj_net$vector
-     prueba <- data.frame(cbind(as.character(info.stocks[[1]]$stocks), eigen_net))
-     names(prueba) <- c('stocks', 'eigencentrality')
-     ggplot(prueba, aes(x=stocks, y=eigen_net), color='black') + geom_point() + coord_flip()
-     ## tb podemos calcular eigencentrality In and Out, aqui hemos transformado la net en undirected
-     plot(netSparse[[1]])
-     
-     
-     
-     library('qgraph')
-     netprueba <- qgraph(sparseMatrices[[1]])
-     cent <- centrality(netprueba)
-     
-     
-     dev.off()
-     ?closeness
-     
-     plot(1:85, eigen_net)
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     on.exit(par(op))
-     # distribution of plots in a grid
-     par(mfrow=c(2,2), mar=c(0,0,0,0)) # plot four figures - 2 rows, 2 columns
-     par(mfrow=c(1,1))
+ 

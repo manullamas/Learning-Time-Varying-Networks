@@ -1,0 +1,187 @@
+"x","Sector","Sector.type","MC"
+"AAL","Materials",8,1.122e+10
+"ABF","Consumer Staples",2,2.353e+10
+"ADM","Financials",5,5.69e+09
+"ADN","Financials",5,4.17e+09
+"AGK","Industrials",7,2.72e+09
+"AMFW","Energy",4,2.11e+09
+"ASHM","Financials",5,2.42e+09
+"ATK","Industrials",7,1.46e+09
+"AV","Financials",5,1.679e+10
+"AZN","Health Care",6,6.398e+10
+"BA","Industrials",7,1.676e+10
+"BARC","Financials",5,2.217e+10
+"BATS","Consumer Staples",2,9.053e+10
+"BBY","Industrials",7,1.77e+09
+"BDEV","Consumers Discretionary",3,4.51e+09
+"BEZ","Financials",5,2.01e+09
+"BFA","Materials",8,6.643e+10
+"BGEO","Financials",5,1.03e+09
+"BKG","Consumers Discretionary",3,3.43e+09
+"BLT","Materials",8,5.604e+10
+"BME","Consumer Staples",2,2.78e+09
+"BNC","Financials",5,5.032e+10
+"BNZL","Consumers Discretionary",3,7.91e+09
+"BOK","Consumer Staples",2,3.1e+09
+"BP","Energy",4,8.156e+10
+"BRBY","Consumers Discretionary",3,6.01e+09
+"BWY","Consumers Discretionary",3,2.64e+09
+"BYG","Financials",5,1.14e+09
+"CAPC","Financials",5,2.41e+09
+"CBG","Financials",5,1.99e+09
+"CCH","Consumer Staples",2,6.22e+09
+"CEY","Materials",8,2.04e+09
+"CNA","Utilities",10,1.225e+10
+"CNE","Energy",4,1.16e+09
+"COB","Industrials",7,2.2e+09
+"CPG","Consumers Discretionary",3,2.472e+10
+"CPI","Consumers Discretionary",3,6.76e+09
+"DGE","Consumer Staples",2,5.469e+10
+"DLG","Financials",5,5.04e+09
+"DLN","Financials",5,3.02e+09
+"DMGT","Communications",1,2.51e+09
+"DNLM","Consumers Discretionary",3,1.79e+09
+"DOM","Consumers Discretionary",3,1.84e+09
+"DRX","Utilities",10,1.24e+09
+"ECM","Technology",9,1.34e+09
+"ELM","Materials",8,1.04e+09
+"EMG","Financials",5,1.88e+09
+"ESNT","Industrials",7,1.3e+09
+"ESUR","Financials",5,1.1e+09
+"ETO","Communications",1,1.06e+09
+"EVR","Materials",8,2.13e+09
+"EXPN","Technology",9,1.423e+10
+"EZJ","Consumers Discretionary",3,4.35e+09
+"FGP","Consumers Discretionary",3,1.27e+09
+"FRES","Materials",8,1.429e+10
+"GFS","Consumers Discretionary",3,3.54e+09
+"GFTU","Consumers Discretionary",3,1.24e+09
+"GKN","Consumers Discretionary",3,5.31e+09
+"GLEN","Materials",8,2.681e+10
+"GNC","Consumer Staples",2,1.4e+09
+"GNK","Consumers Discretionary",3,2.52e+09
+"GPOR","Financials",5,2.25e+09
+"GSK","Health Care",6,8.111e+10
+"HAS","Consumers Discretionary",3,1.81e+09
+"HIK","Health Care",6,4.56e+09
+"HL","Financials",5,6.3e+09
+"HMSO","Financials",5,4.48e+09
+"HOME","Consumers Discretionary",3,1.27e+09
+"HSBA","Financials",5,9.69e+10
+"HSV","Industrials",7,1.76e+09
+"HSX","Financials",5,2.97e+09
+"HWDN","Consumers Discretionary",3,2.83e+09
+"IAG","Consumers Discretionary",3,7.46e+09
+"IAP","Financials",5,3.06e+09
+"ICP","Financials",5,1.66e+09
+"IGG","Financials",5,3.45e+09
+"IHG","Consumers Discretionary",3,7.67e+09
+"IMI","Industrials",7,2.94e+09
+"INCH","Consumers Discretionary",3,3.07e+09
+"INDV","Health Care",6,2.31e+09
+"INF","Communications",1,4.64e+09
+"IPO","Financials",5,1.07e+09
+"ISAT","Communications",1,3.72e+09
+"ITRK","Consumers Discretionary",3,5.83e+09
+"ITV","Communications",1,7.85e+09
+"JDW","Consumers Discretionary",3,1.03e+09
+"JE","Consumer Staples",2,3.98e+09
+"JLT","Financials",5,2.17e+09
+"JUP","Financials",5,1.87e+09
+"KGF","Consumers Discretionary",3,8.41e+09
+"KGP","Materials",8,4.03e+09
+"KIE","Industrials",7,1.12e+09
+"KYGA","Consumer Staples",2,1.36e+10
+"LAND","Financials",5,8.56e+09
+"LGEN","Financials",5,1.22e+10
+"LLOY","Financials",5,3.205e+10
+"LRE","Financials",5,1.21e+09
+"MAB","Consumers Discretionary",3,1.08e+09
+"MCRO","Technology",9,4.64e+09
+"MERL","Consumers Discretionary",3,4.93e+09
+"MGGT","Industrials",7,3.57e+09
+"MKS","Consumers Discretionary",3,5.47e+09
+"MLC","Consumers Discretionary",3,1.34e+09
+"MNDI","Materials",8,7.65e+09
+"MRW","Consumer Staples",2,4.54e+09
+"NG","Utilities",10,4.048e+10
+"OCDO","Consumer Staples",2,1.66e+09
+"OML","Financials",5,9.69e+09
+"PETS","Consumers Discretionary",3,1.24e+09
+"PFC","Energy",4,2.95e+09
+"PFG","Financials",5,4.14e+09
+"PHNX","Financials",5,1.86e+09
+"PNN","Utilities",10,3.68e+09
+"POLY","Materials",8,5.02e+09
+"PRU","Financials",5,3.551e+10
+"PSON","Communications",1,7.06e+09
+"PTEC","Technology",9,2.87e+09
+"PZC","Consumer Staples",2,1.42e+09
+"QQ","Technology",9,1.33e+09
+"RB","Consumer Staples",2,5.235e+10
+"RBS","Financials",5,2.196e+10
+"RDSB","Energy",4,1.608e+11
+"RDW","Consumers Discretionary",3,1.25e+09
+"REL","Technology",9,2.989e+10
+"RGU","Consumers Discretionary",3,2.88e+09
+"RIO","Materials",8,4.4e+10
+"RMG","Industrials",7,5.15e+09
+"ROR","Industrials",7,1.81e+09
+"RPC","Materials",8,1.64e+09
+"RR","Industrials",7,1.451e+10
+"RRS","Materials",8,7.82e+09
+"RSA","Financials",5,5.15e+09
+"RSW","Industrials",7,1.94e+09
+"RTO","Consumers Discretionary",3,4e+09
+"RYA","Consumers Discretionary",3,1.505e+10
+"SAB","Consumer Staples",2,7.035e+10
+"SAGA","Financials",5,2.39e+09
+"SBRY","Consumer Staples",2,4.64e+09
+"SDR","Financials",5,7.5e+09
+"SDRC","Financials",5,5.58e+09
+"SGE","Technology",9,7.92e+09
+"SGP","Consumers Discretionary",3,1.29e+09
+"SHB","Financials",5,2.66e+09
+"SHP","Health Care",6,3.462e+10
+"SKY","Communications",1,1.452e+10
+"SL","Financials",5,6.96e+09
+"SMDS","Materials",8,3.94e+09
+"SMIN","Industrials",7,5.35e+09
+"SMWH","Consumers Discretionary",3,1.77e+09
+"SN","Health Care",6,1.122e+10
+"SPD","Consumers Discretionary",3,1.78e+09
+"SPI","Health Care",6,1.38e+09
+"SPX","Industrials",7,3.21e+09
+"SRP","Technology",9,1.41e+09
+"SSPG","Consumers Discretionary",3,1.57e+09
+"STAN","Financials",5,2.05e+10
+"STJ","Financials",5,4.96e+09
+"SVS","Financials",5,1.03e+09
+"SVT","Utilities",10,5.68e+09
+"SXS","Industrials",7,2.33e+09
+"TALK","Communications",1,2.07e+09
+"TCG","Consumers Discretionary",3,1.01e+09
+"TED","Consumers Discretionary",3,1.1e+09
+"TLW","Energy",4,2.13e+09
+"TPK","Industrials",7,3.87e+09
+"TSCO","Consumer Staples",2,1.294e+10
+"TTA","Energy",4,1.0291e+11
+"TW","Financials",5,4.99e+09
+"UBM","Consumers Discretionary",3,2.68e+09
+"ULE","Industrials",7,1.21e+09
+"ULVR","Consumer Staples",2,1.0238e+11
+"UTG","Financials",5,1.38e+09
+"UU","Utilities",10,6.73e+09
+"VCT","Materials",8,1.32e+09
+"VED","Materials",8,1.52e+09
+"VM","Financials",5,1.26e+09
+"VOD","Communications",1,6.243e+10
+"VSVS","Materials",8,1.02e+09
+"WEIR","Industrials",7,3.36e+09
+"WG","Industrials",7,2.7e+09
+"WKP","Financials",5,1.06e+09
+"WMH","Consumers Discretionary",3,2.76e+09
+"WOS","Industrials",7,1.093e+10
+"WPP","Communications",1,2.249e+10
+"WTB","Consumers Discretionary",3,7.41e+09
+"ZPLA","Communications",1,1.25e+09

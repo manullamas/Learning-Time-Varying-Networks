@@ -5,6 +5,7 @@ startDate <- "2015-01-01"
 # endDate <-
 
 
+### Get all tickers (global Market) used in yahoo
 options(java.parameters = "-Xmx1024m")
 library(XLConnect)
 ## Get tickers and process dataframe
@@ -13,7 +14,6 @@ names(allTickers) <- allTickers[3,]
 allTickers <- allTickers[4:nrow(allTickers),]
 ## Subset UK tickers
 UKtickers <- subset(allTickers, Country=='UK')
-
 library(quantmod)  # also loads xts and TTR
 library(plyr)
       # Fetch all Symbols & store only the tickers to retrieve the data
@@ -23,17 +23,16 @@ symbols <- UKtickers$Ticker
 dataset<- xts() # Only run once
 
 
+### Get Stock values from selected tickers (UK)
 n <- length(symbols)
 pb <- txtProgressBar(min = 0, max = n, style=3)
 # Actual loop: 
 for(i in 1:length(symbols)) {
   symbols[i]-> symbol
-  # specify the "from" date to desired start date
   tryit <- try(getSymbols(symbol,from=startDate, src='yahoo'))
   if(inherits(tryit, "try-error")){
     i <- i+1
   } else {
-    # specify the "from" date to desired start date
     data <- getSymbols(symbol, from=startDate, src='yahoo')
     dataset <- merge(dataset, Cl(get(symbols[i])))
     rm(symbol)
@@ -70,11 +69,8 @@ for (i in 1: nrow(metrics)) {
     }
 }
 names(MC) <- c('tickers', 'MarketCap')
-### We not consider stocks without Market Capitalisation (not relevant)
+### We not consider stocks without Market Capitalisation
 MC1 <- MC[is.na(MC$MarketCap)==FALSE,]
-# MC2 <- data.frame(t(MC1$MarketCap))
-# names(MC2) <- as.character(MC1$tickers)
-
 
 
 #### Merge datasets. This way we get rid of the stocks that doesnt have Market Cap.

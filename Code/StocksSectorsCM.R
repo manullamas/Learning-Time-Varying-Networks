@@ -29,7 +29,7 @@ write.csv(Stocks, file = paste0(path1,"FTSE_Stocks.csv"),row.names=FALSE)
 ####### as ggplot does when coloring (consistency)
 rm(list=ls())
 path1 <- 'C:/Users/Manuel/Desktop/Southampton/MasterThesis/Data/FTSE/'
-Stocks <- read.csv(file = paste0(path1,"FTSE_Stocks.csv"))
+Stocks <- read.csv(file = paste0(path1,"FTSE_Stocks_2.csv"))
 
 for (i in 1:nrow(Stocks)) {
   if (Stocks[i,2]=='Communications') {

@@ -11,7 +11,7 @@ for (t in seq_along(netSparse)) {
               vertex.label=as.character(stockNames[,2]), vertex.label.color='black',
               edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
               main = 'Reingold - Frutcherman', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
-  legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+  legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
          pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 }
 dev.off() 
@@ -22,7 +22,7 @@ for (t in seq_along(netSparse)) {
               vertex.label=as.character(stockNames[,2]), vertex.label.color='black',
               edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
               main = 'lgl', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
-  legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+  legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
          pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 }
 dev.off()
@@ -30,10 +30,10 @@ dev.off()
 pdf("kk_absWeights.pdf")
 for (t in seq_along(netSparse)) {
   plot.igraph(netSparse[[t]], layout = TESLA.kk.abs[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
-              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
+              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','red')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
               edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
               main = 'TESLA   -   kk layout', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
-  legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+  legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
          pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 }
 dev.off()
@@ -41,10 +41,10 @@ dev.off()
 pdf("fr.pdf")
 for (t in seq_along(netSparse)) {
   plot.igraph(netSparse[[t]], layout = TESLA.fr[[5]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
-              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
+              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','red')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
               edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
               main = 'TESLA   -   fr layout', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
-  legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+  legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
          pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 }
 dev.off()
@@ -55,18 +55,18 @@ dev.off()
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'TESLA   -   fr_abs', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
-#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
-#            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
+#                   legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
+#                          pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
 
 pdf("MDS.pdf")
 for (t in seq_along(netSparse)) {
   plot.igraph(netSparse[[t]], layout = TESLA.MDS[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
-              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
+              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','red')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
               edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
               main = 'TESLA   -   MDS', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
-  legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+  legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
          pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 }
 dev.off()
@@ -77,18 +77,18 @@ dev.off()
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'TESLA   -   MDS (distance matrix)', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
-#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
-#            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
+# legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
+#        pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
 
 pdf("MDSc.pdf")
 for (t in seq_along(netSparse)) {
   plot.igraph(netSparse[[t]], layout = TESLA.MDScorr[[t]], edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
-              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
+              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','red')[(deg.in[[t]]>mean(deg.in[[t]]))+1], 
               edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
               main = 'TESLA   -   MDS (correlation matrix)', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
-  legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+  legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
          pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 }
 dev.off()
@@ -97,10 +97,10 @@ rnd <- layout_randomly(netSparse[[1]])
 pdf("randomFixed.pdf")
 for (t in seq_along(netSparse)) {
   plot.igraph(netSparse[[t]], layout = rnd, edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
-              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1],
+              vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','red')[(deg.in[[t]]>mean(deg.in[[t]]))+1],
               edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
               main = 'TESLA   -   Random', sub = paste0('t = ', t), vertex.size = deg.out[[t]]/5+deg.in[[t]]/18)
-  legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+  legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
          pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 }
 dev.off()
@@ -184,8 +184,8 @@ saveGIF({
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   kk layout', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
-#            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
+#                   legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
+#                          pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
 #   
@@ -195,8 +195,8 @@ saveGIF({
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   fr layout', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
-#            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
+#       legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
+#              pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
 #   
@@ -206,8 +206,8 @@ saveGIF({
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   fr_abs', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
-#            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
+#       legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
+#              pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
 #   
@@ -217,7 +217,7 @@ saveGIF({
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   MDS', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#     legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -228,7 +228,7 @@ saveGIF({
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1], 
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   MDS (distance matrix)', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#     legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -240,7 +240,7 @@ saveGIF({
 #                 vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in.C[[t]]>mean(deg.in.C[[t]]))+1],
 #                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
 #                 main = 'CORR   -   Random', sub = paste0('t = ', t), vertex.size = deg.out.C[[t]]+deg.in.C[[t]]/10)
-#     legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+#     legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
 #            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
 #   }
 #   dev.off()
@@ -319,10 +319,10 @@ rnd <- layout_randomly(netSparse[[1]])
 saveGIF( {
   for (t in 1:T) {
     plot.igraph(netSparse[[t]], layout = rnd, edge.color = edge.col.in[[t]], edge.curved=.3, edge.width= (E(netSparse[[t]])$weight)/3,
-                vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','yellow')[(deg.in[[t]]>mean(deg.in[[t]]))+1],
+                vertex.label=as.character(stockNames[,2]), vertex.label.color = c('black','red')[(deg.in[[t]]>mean(deg.in[[t]]))+1],
                 edge.arrow.size = 1, edge.arrow.width = 1, edge.arrow.mode = 0,
                 vertex.size = deg.out[[t]]/5+deg.in[[t]]/18, sub = paste0('t = ', t))
-    legend(x=0.5, y=-0.8, unique(Sectors$Sector), pch=21,  col="#777777", pt.bg=col$color,
+    legend(x=0.5, y=-0.8, sort(unique(Sectors$Sector)), pch=21,  col="#777777", pt.bg=ggcolor,
            pt.cex=1.3, cex=0.7, bty="n", ncol=1, y.intersp = 1, x.intersp = 1)
   }
 },
